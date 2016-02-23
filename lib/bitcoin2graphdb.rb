@@ -1,5 +1,5 @@
 require "bitcoin2graphdb/version"
 
-module Bitcoin2graphdb
+module Bitcoin2Graphdb
   # Your code goes here...
 end
