@@ -5,7 +5,7 @@ require 'bitcoin2graphdb/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "bitcoin2graphdb"
-  spec.version       = Bitcoin2graphdb::VERSION
+  spec.version       = Bitcoin2Graphdb::VERSION
   spec.authors       = ["azuchi"]
   spec.email         = ["azuchi@haw.co.jp"]
 
@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency "database_cleaner"
 end
