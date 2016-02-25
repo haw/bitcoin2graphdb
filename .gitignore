@@ -10,3 +10,5 @@
 *.iml
 .idea
 config.yml
+cache.db
+db/neo4j
