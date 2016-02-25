@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Bitcoin2graphdb do
+describe Bitcoin2Graphdb do
 
   it 'has a version number' do
-    expect(Bitcoin2graphdb::VERSION).not_to be nil
+    expect(Bitcoin2Graphdb::VERSION).not_to be nil
   end
 
 end
