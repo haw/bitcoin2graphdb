@@ -16,7 +16,7 @@ module Graphdb
       property :previous_block_hash
       property :next_block_hash
 
-      has_many :in, :txes, origin: :block
+      has_many :in, :transactions, origin: :block
 
       def initialize(block_height)
         self.block_hash = Bitcoin2Graphdb::Bitcoin.provider.block_hash(block_height)
