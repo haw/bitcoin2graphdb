@@ -26,7 +26,7 @@ module Bitcoin2Graphdb
       end
 
       def tx(txid)
-        api.get_tx(txid)
+        api.provider.getrawtransaction(txid, 1)
       end
 
     end

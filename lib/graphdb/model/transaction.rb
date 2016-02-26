@@ -13,6 +13,18 @@ module Graphdb
       has_one :out, :block, type: :block
       has_many :in, :inputs, origin: :tx
       has_many :in, :outputs, origin: :tx
+
+      def initialize(txid)
+        tx = Bitcoin2Graphdb::Bitcoin.provider.tx(txid)
+        self.hex = tx['hex']
+        self.txid = tx['txid']
+        self.version = tx['version']
+        self.block_time = tx['blocktime']
+        self.lock_time = tx['locktime']
+        self.block_hash = tx['blockhash']
+        self.time = tx['time']
+      end
+
     end
   end
 end
