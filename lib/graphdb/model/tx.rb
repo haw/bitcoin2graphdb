@@ -1,5 +1,5 @@
-module Bitcoin2Graphdb
-  module Neo4j
+module Graphdb
+  module Model
     class Tx
       include Neo4j::ActiveNode
       property :hex

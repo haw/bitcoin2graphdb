@@ -1,5 +1,5 @@
-module Bitcoin2Graphdb
-  module Graphdb
+module Graphdb
+  module Model
     class TxOut
       include Neo4j::ActiveNode
 

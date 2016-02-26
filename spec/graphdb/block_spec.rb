@@ -1,9 +1,8 @@
 require 'spec_helper'
-
-describe Bitcoin2Graphdb::Graphdb::Block do
+describe Graphdb::Model::Block do
 
   it 'create block node' do
-    block = Bitcoin2Graphdb::Graphdb::Block.new(0)
+    block = Graphdb::Model::Block.new(0)
     expect(block.block_hash).to eq('000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943')
     expect(block.size).to eq(285)
     expect(block.height).to eq(0)

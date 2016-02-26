@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'bitcoin2graphdb'
+require 'base'
 require 'database_cleaner'
 require 'bitcoin_mock'
 require 'neo4j'
