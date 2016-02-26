@@ -18,20 +18,22 @@ module Graphdb
 
       has_many :in, :transactions, origin: :block
 
-      def initialize(block_height)
-        self.block_hash = Bitcoin2Graphdb::Bitcoin.provider.block_hash(block_height)
-        block = Bitcoin2Graphdb::Bitcoin.provider.block(block_hash)
-        self.size = block['size']
-        self.height = block['height']
-        self.version = block['version']
-        self.merkle_root = block['merkleroot']
-        self.time = Time.at(block['time'])
-        self.nonce = block['nonce']
-        self.bits = block['bits']
-        self.difficulty = block['difficulty']
-        self.chain_work = block['chainwork']
-        self.previous_block_hash = block['previouseblockhash']
-        self.next_block_hash = block['nextblockhash']
+      def self.from_block_height(block_height)
+        block = new
+        block.block_hash = Bitcoin2Graphdb::Bitcoin.provider.block_hash(block_height)
+        hash = Bitcoin2Graphdb::Bitcoin.provider.block(block.block_hash)
+        block.size = hash['size']
+        block.height = hash['height']
+        block.version = hash['version']
+        block.merkle_root = hash['merkleroot']
+        block.time = Time.at(hash['time'])
+        block.nonce = hash['nonce']
+        block.bits = hash['bits']
+        block.difficulty = hash['difficulty']
+        block.chain_work = hash['chainwork']
+        block.previous_block_hash = hash['previouseblockhash']
+        block.next_block_hash = hash['nextblockhash']
+        block
       end
 
     end

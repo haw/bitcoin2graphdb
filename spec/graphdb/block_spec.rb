@@ -2,7 +2,7 @@ require 'spec_helper'
 describe Graphdb::Model::Block do
 
   it 'create block node' do
-    block = Graphdb::Model::Block.new(0)
+    block = Graphdb::Model::Block.from_block_height(0)
     expect(block.block_hash).to eq('000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943')
     expect(block.size).to eq(285)
     expect(block.height).to eq(0)
