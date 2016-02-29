@@ -48,6 +48,7 @@ module Graphdb
         hash['tx'].each do |txid|
           block.transactions << Graphdb::Model::Transaction.create_from_txid(txid)
         end
+        block.save!
         block
       end
 

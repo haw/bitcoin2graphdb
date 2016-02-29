@@ -38,6 +38,7 @@ module Graphdb
         hash['vout'].each do |o|
           tx.outputs << Graphdb::Model::TxOut.create_from_hash(o)
         end
+        tx.save!
         tx
       end
 
