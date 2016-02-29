@@ -25,7 +25,7 @@ describe Graphdb::Model::Block do
   it 'latest' do
     Graphdb::Model::Block.create_from_block_height(722039)
     Graphdb::Model::Block.create_from_block_height(721046)
-    block = Graphdb::Model::Block.as(:latest_block).latest(:latest_block)
+    block = Graphdb::Model::Block.latest
     expect(block.height).to eq(722039)
   end
 end

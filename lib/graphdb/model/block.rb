@@ -28,7 +28,7 @@ module Graphdb
       validates :time, :presence => true
       validates :nonce, :presence => true
 
-      scope :latest, ->(identifier){order("#{identifier}.height DESC").first}
+      scope :latest, -> {order(height: 'DESC').first}
 
       def self.create_from_block_height(block_height)
         block = new
