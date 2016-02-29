@@ -20,6 +20,7 @@ describe Graphdb::Model::TxOut do
     expect(tx_out.script_pubkey_hex).to eq('a91450f8a391e9234d8aadc340f00ab9404b231dd74287')
     expect(tx_out.req_sigs).to eq(1)
     expect(tx_out.output_type).to eq('scripthash')
+    expect(tx_out.addresses.length).to eq(1)
   end
 
 end

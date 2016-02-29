@@ -6,5 +6,6 @@ module Graphdb
     autoload :Transaction, 'graphdb/model/transaction'
     autoload :TxIn, 'graphdb/model/tx_in'
     autoload :TxOut, 'graphdb/model/tx_out'
+    autoload :Address, 'graphdb/model/address'
   end
 end
