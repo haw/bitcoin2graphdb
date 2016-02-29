@@ -1,7 +1,7 @@
 module Graphdb
   module Model
-    class Transaction
-      include Neo4j::ActiveNode
+    class Transaction < ActiveNodeBase
+
       property :hex
       property :txid, index: :exact, constraint: :unique
       property :version, type: Integer

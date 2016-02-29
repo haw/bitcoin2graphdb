@@ -1,7 +1,6 @@
 module Graphdb
   module Model
-    class Block
-      include Neo4j::ActiveNode
+    class Block < ActiveNodeBase
 
       property :block_hash, index: :exact, constraint: :unique
       property :size, type: Integer
@@ -15,6 +14,8 @@ module Graphdb
       property :chain_work
       property :previous_block_hash
       property :next_block_hash
+      property :created_at
+      property :updated_at
 
       has_many :in, :transactions, origin: :block
 

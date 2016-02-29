@@ -1,7 +1,6 @@
 module Graphdb
   module Model
-    class TxIn
-      include Neo4j::ActiveNode
+    class TxIn < ActiveNodeBase
 
       property :txid
       property :vout, type: Integer

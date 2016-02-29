@@ -1,7 +1,6 @@
 module Graphdb
   module Model
-    class TxOut
-      include Neo4j::ActiveNode
+    class TxOut < ActiveNodeBase
 
       property :value
       property :n, type: Integer
