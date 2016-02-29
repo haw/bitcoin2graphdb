@@ -14,6 +14,7 @@ module Graphdb
       property :chain_work
       property :previous_block_hash
       property :next_block_hash
+      property :confirmations, type: Integer
       property :created_at
       property :updated_at
 
@@ -34,6 +35,7 @@ module Graphdb
         block.chain_work = hash['chainwork']
         block.previous_block_hash = hash['previouseblockhash']
         block.next_block_hash = hash['nextblockhash']
+        block.confirmations = hash['confirmations']
         block
       end
 

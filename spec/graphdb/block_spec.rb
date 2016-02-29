@@ -14,6 +14,7 @@ describe Graphdb::Model::Block do
     expect(block.chain_work).to eq('0000000000000000000000000000000000000000000000000000000100010001')
     expect(block.next_block_hash).to eq('00000000b873e79784647a6c82962c70d228557d24a747ea4d1b8bbe878e1206')
     expect(block.nonce).to eq(414098458)
+    expect(block.confirmations).to eq(721047)
   end
 
 end

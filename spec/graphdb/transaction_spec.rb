@@ -11,6 +11,7 @@ describe Graphdb::Model::Transaction do
     expect(tx.block_hash).to eq('00000000b873e79784647a6c82962c70d228557d24a747ea4d1b8bbe878e1206')
     expect(tx.block_time).to eq(Time.at(1296688928))
     expect(tx.time).to eq(Time.at(1296688928))
+    expect(tx.confirmations).to eq(721325)
   end
 
 end

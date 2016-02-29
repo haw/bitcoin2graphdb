@@ -9,6 +9,7 @@ module Graphdb
       property :block_hash
       property :block_time, type: Time
       property :time, type: Time
+      property :confirmations, type: Integer
 
       has_one :out, :block, type: :block
       has_many :in, :inputs, origin: :tx
@@ -24,6 +25,7 @@ module Graphdb
         tx.lock_time = hash['locktime']
         tx.block_hash = hash['blockhash']
         tx.time = hash['time']
+        tx.confirmations = hash['confirmations']
         tx
       end
 
