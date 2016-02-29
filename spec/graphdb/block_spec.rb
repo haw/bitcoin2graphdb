@@ -21,4 +21,11 @@ describe Graphdb::Model::Block do
     # expect(target.outputs).to contain_exactly(have_attributes(script_pubkey_hex: '76a9142d8838af0d7786ffbfec7136837d576af982ea8b88ac'),
     #                                           have_attributes(script_pubkey_hex: '76a9141ea1b9194abd07be423d0b8d7d3b9e7028fb438288ac'))
   end
+
+  it 'latest' do
+    Graphdb::Model::Block.create_from_block_height(722039)
+    Graphdb::Model::Block.create_from_block_height(721046)
+    block = Graphdb::Model::Block.as(:latest_block).latest(:latest_block)
+    expect(block.height).to eq(722039)
+  end
 end

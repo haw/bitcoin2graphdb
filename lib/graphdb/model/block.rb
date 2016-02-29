@@ -28,6 +28,8 @@ module Graphdb
       validates :time, :presence => true
       validates :nonce, :presence => true
 
+      scope :latest, ->(identifier){order("#{identifier}.height DESC").first}
+
       def self.create_from_block_height(block_height)
         block = new
         block.block_hash = Bitcoin2Graphdb::Bitcoin.provider.block_hash(block_height)
