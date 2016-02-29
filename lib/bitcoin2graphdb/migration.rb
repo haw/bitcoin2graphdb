@@ -7,7 +7,10 @@ module Bitcoin2Graphdb
     end
 
     def run
-      block_height = current_block_height + 1
+      run_with_height(current_block_height + 1)
+    end
+
+    def run_with_height(block_height)
       puts "start migration for block height = #{block_height}. #{Time.now}"
       Neo4j::Transaction.run do |tx|
         Graphdb::Model::Block.create_from_block_height(block_height)
