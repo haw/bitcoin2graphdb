@@ -17,7 +17,6 @@ module Graphdb
       validates :script_pubkey_hex, :presence => true
 
       def self.create_from_hash(hash)
-        puts "scriptPubKey = #{hash['scriptPubKey']['hex']}"
         tx_out = new
         tx_out.value = hash['value']
         tx_out.n = hash['n']
@@ -28,7 +27,6 @@ module Graphdb
           tx_out.req_sigs = hash['scriptPubKey']['reqSigs']
         end
         tx_out.save!
-        puts "uuid = #{tx_out.uuid}"
         tx_out
       end
 
