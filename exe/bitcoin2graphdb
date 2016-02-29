@@ -1,19 +1,18 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "bitcoin2graphdb"
+require 'base'
 require 'optparse'
 require 'json'
+require 'yaml'
+require 'active_support/all'
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: openassets [options] [command]"
+  opts.banner = "Usage: bitcoin2graphdb -c config.json start"
 
   opts.on("-c PATH", "--config PATH", "config load path") do |path|
     options[:config] = path
-  end
-  opts.on("-e", "--env", "load config from ENV variablse") do |env|
-    options[:env] = env
   end
   opts.on("-v", "--verbose", "verbose output") do |v|
     options[:verbose] = v
@@ -21,36 +20,23 @@ OptionParser.new do |opts|
 end.parse!
 
 puts "Welcome to Bitcoin2Graphdb\n\n"
-if options[:env]
-  rpc = {
-      :host			=> ENV['OA_RPC_HOST']			|| 'localhost',
-      :port			=> ENV['OA_RPC_PORT']			|| 8332,
-      :user			=> ENV['OA_RPC_USER']			|| '',
-      :password => ENV['OA_RPC_PASSWORD'] || '',
-      :schema		=> ENV['OA_RPC_SCHEMA']   || 'http'
-  }
-  config = {
-      :network	    => ENV['OA_NETWORK'] || 'mainnet',
-      :provider     => 'bitcoind',
-      :cache        => ENV['OA_CACHE'] || 'cache.db',
-      :dust_limit   => (ENV['OA_DUST_LIMIT'] || 600).to_i,
-      :default_fees => (ENV['OA_DEFAULT_FEES'] || 10000).to_i,
-      :rpc					=> rpc
-  }
-elsif options[:config]
+
+if options[:config]
   if !File.exists?(options[:config])
     puts "File not found: #{options[:config]}"
     exit(1)
   end
-  config = JSON.parse(File.read(options[:config]), {symbolize_names: true})
+  config = YAML.load(File.read(options[:config])).deep_symbolize_keys
+  # config = JSON.parse(File.read(options[:config]), {symbolize_names: true})
+else
+  puts "config file not specified."
+  exit(1)
 end
 
-if options[:verbose]
-  puts "using config:"
-  puts config.inspect
-end
-$oa = $api = OpenAssets::Api.new(config)
+$migration = Bitcoin2Graphdb::Migration.new(config)
+$migration.run
 
+=begin
 command = ARGV.shift
 
 if command == 'console'
@@ -64,3 +50,4 @@ elsif command && $oa.respond_to?(command)
 else
   puts "use 'openassets --help' for help"
 end
+=end
