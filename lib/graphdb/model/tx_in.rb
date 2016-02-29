@@ -9,9 +9,11 @@ module Graphdb
       property :coinbase
       property :sequence
 
-      has_one :out, :tx, type: :tx
+      has_one :out, :transaction, type: :transaction, model_class: Transaction
 
-      def self.from_hash(hash)
+      validates :sequence, :presence => true
+
+      def self.create_from_hash(hash)
         tx_in = new
         tx_in.txid = hash['txid']
         tx_in.vout = hash['vout']
@@ -21,6 +23,7 @@ module Graphdb
         end
         tx_in.coinbase = hash['coinbase']
         tx_in.sequence = hash['sequence']
+        tx_in.save!
         tx_in
       end
 

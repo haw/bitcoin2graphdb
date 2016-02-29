@@ -13,7 +13,7 @@ describe Graphdb::Model::TxOut do
           'addresses' => ['2MzdMuNFP3gUpg4dZRFYc5KJhBPTa7mCsnm']
         }
     }
-    tx_out = Graphdb::Model::TxOut.from_hash(hash)
+    tx_out = Graphdb::Model::TxOut.create_from_hash(hash)
     expect(tx_out.value).to eq(0.00350000)
     expect(tx_out.n).to eq(0)
     expect(tx_out.script_pubkey_asm).to eq('OP_HASH160 50f8a391e9234d8aadc340f00ab9404b231dd742 OP_EQUAL')

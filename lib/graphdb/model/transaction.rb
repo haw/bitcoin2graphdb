@@ -12,10 +12,15 @@ module Graphdb
       property :confirmations, type: Integer
 
       has_one :out, :block, type: :block
-      has_many :in, :inputs, origin: :tx
-      has_many :in, :outputs, origin: :tx
+      has_many :in, :inputs, origin: :transaction, model_class: TxIn
+      has_many :in, :outputs, origin: :transaction, model_class: TxOut
 
-      def self.from_txid(txid)
+      validates :hex, :presence => true
+      validates :txid, :presence => true
+      validates :version, :presence => true
+      validates :block_hash, :presence => true
+
+      def self.create_from_txid(txid)
         tx = new
         hash = Bitcoin2Graphdb::Bitcoin.provider.tx(txid)
         tx.hex = hash['hex']
@@ -26,6 +31,13 @@ module Graphdb
         tx.block_hash = hash['blockhash']
         tx.time = hash['time']
         tx.confirmations = hash['confirmations']
+        tx.save!
+        hash['vin'].each do |i|
+          tx.inputs << Graphdb::Model::TxIn.create_from_hash(i)
+        end
+        hash['vout'].each do |o|
+          tx.outputs << Graphdb::Model::TxOut.create_from_hash(o)
+        end
         tx
       end
 

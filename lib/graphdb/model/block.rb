@@ -18,9 +18,17 @@ module Graphdb
       property :created_at
       property :updated_at
 
-      has_many :in, :transactions, origin: :block
+      has_many :in, :transactions, origin: :block, model_class: Transaction
 
-      def self.from_block_height(block_height)
+      validates :block_hash, :presence => true
+      validates :height, :presence => true
+      validates :merkle_root, :presence => true
+      validates :version, :presence => true
+      validates :size, :presence => true
+      validates :time, :presence => true
+      validates :nonce, :presence => true
+
+      def self.create_from_block_height(block_height)
         block = new
         block.block_hash = Bitcoin2Graphdb::Bitcoin.provider.block_hash(block_height)
         hash = Bitcoin2Graphdb::Bitcoin.provider.block(block.block_hash)
@@ -36,6 +44,10 @@ module Graphdb
         block.previous_block_hash = hash['previouseblockhash']
         block.next_block_hash = hash['nextblockhash']
         block.confirmations = hash['confirmations']
+        block.save!
+        hash['tx'].each do |txid|
+          block.transactions << Graphdb::Model::Transaction.create_from_txid(txid)
+        end
         block
       end
 

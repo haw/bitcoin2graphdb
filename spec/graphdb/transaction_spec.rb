@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Graphdb::Model::Transaction do
 
   it 'create tx node' do
-    tx = Graphdb::Model::Transaction.from_txid('f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba')
+    tx = Graphdb::Model::Transaction.create_from_txid('f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba')
     expect(tx.hex).to eq('01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0e0420e7494d017f062f503253482fffffffff0100f2052a010000002321021aeaf2f8638a129a3156fbe7e5ef635226b0bafd495ff03afe2c843d7e3a4b51ac00000000')
     expect(tx.txid).to eq('f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba')
     expect(tx.version).to eq(1)
