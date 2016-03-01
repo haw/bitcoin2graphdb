@@ -19,6 +19,7 @@ module Graphdb
       property :updated_at
 
       has_many :in, :transactions, origin: :block, model_class: Transaction
+      has_one :out, :previous_block, type: :previous_block, model_class: Block
 
       validates :block_hash, :presence => true
       validates :height, :presence => true
@@ -29,6 +30,7 @@ module Graphdb
       validates :nonce, :presence => true
 
       scope :latest, -> {order(height: 'DESC').first}
+      scope :with_block_hash, -> (block_hash){where(block_hash: block_hash)}
 
       def self.create_from_block_height(block_height)
         block = new
@@ -52,6 +54,11 @@ module Graphdb
         end
         block.save!
         block
+      end
+
+      private
+      def chain_previous_block
+
       end
 
     end
