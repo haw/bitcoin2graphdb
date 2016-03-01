@@ -10,7 +10,7 @@ module Graphdb
       property :req_sigs, type: Integer
 
       has_one :out, :transaction, type: :transaction, model_class: Transaction
-      has_many :in, :addresses, type: :address, model_class: Address
+      has_many :out, :addresses, type: :address, model_class: Address
 
       validates :value, :presence => true
       validates :n, :presence => true
