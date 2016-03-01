@@ -22,7 +22,7 @@ module Graphdb
 
       def self.create_from_txid(txid)
         tx = new
-        hash = Bitcoin2Graphdb::Bitcoin.provider.tx(txid)
+        hash = load_tx(txid)
         tx.hex = hash['hex']
         tx.txid = hash['txid']
         tx.version = hash['version']
@@ -40,6 +40,11 @@ module Graphdb
         end
         tx.save!
         tx
+      end
+
+      private
+      def self.load_tx(txid)
+        Bitcoin2Graphdb::Bitcoin.provider.tx(txid)
       end
 
     end

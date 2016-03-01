@@ -21,7 +21,7 @@ describe Graphdb::Model::Block do
                                         have_attributes(txid: 'f1e579409e5d6ae20424f71b5cf46b8a7fd5deb62a0b3da989c33957cf0b1b92'),
                                         have_attributes(txid: 'b50ddb740dae9b2b652dfe4db84e2d594e02ca9323adf3e614e1edd8b1ea6f1e'),
                                         have_attributes(txid: 'a983a4d0326ddb177107431515832205c843a61f0bb518be459134f3bdd035db'))
-      # expect(@block.previous_block.height).to eq(722039)
+      expect(@block.previous_block.height).to eq(722038)
       target = @block.transactions.find{|t|t.txid == 'f1e579409e5d6ae20424f71b5cf46b8a7fd5deb62a0b3da989c33957cf0b1b92'}
       expect(target.txid).to eq('f1e579409e5d6ae20424f71b5cf46b8a7fd5deb62a0b3da989c33957cf0b1b92')
       expect(target.inputs.length).to eq(1)
@@ -52,6 +52,17 @@ describe Graphdb::Model::Block do
       expect(block.block_hash).to eq(block_hash)
       expect(block.height).to eq(721046)
       expect(Graphdb::Model::Block.with_block_hash('00000000000036ffc3e2e3c247bab16e151be44a34207f822ffd7c7b879541cc').first).to be nil
+    end
+  end
+
+  describe 'genesis_block?' do
+    before{
+      @genesis_block = Graphdb::Model::Block.create_from_block_height(0)
+      @non_genesis_block = Graphdb::Model::Block.create_from_block_height(721046)
+    }
+    it do
+      expect(@genesis_block.genesis_block?).to be true
+      expect(@non_genesis_block.genesis_block?).to be false
     end
   end
 end

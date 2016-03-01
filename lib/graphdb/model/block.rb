@@ -29,6 +29,8 @@ module Graphdb
       validates :time, :presence => true
       validates :nonce, :presence => true
 
+      after_create :chain_previous_block
+
       scope :latest, -> {order(height: 'DESC').first}
       scope :with_block_hash, -> (block_hash){where(block_hash: block_hash)}
 
@@ -45,20 +47,29 @@ module Graphdb
         block.bits = hash['bits']
         block.difficulty = hash['difficulty']
         block.chain_work = hash['chainwork']
-        block.previous_block_hash = hash['previouseblockhash']
+        block.previous_block_hash = hash['previousblockhash']
         block.next_block_hash = hash['nextblockhash']
         block.confirmations = hash['confirmations']
         block.save!
-        hash['tx'].each do |txid|
-          block.transactions << Graphdb::Model::Transaction.create_from_txid(txid)
+        unless block.genesis_block?
+          hash['tx'].each do |txid|
+            block.transactions << Graphdb::Model::Transaction.create_from_txid(txid)
+          end
         end
         block.save!
         block
       end
 
+      def genesis_block?
+        Bitcoin.network[:genesis_hash] == block_hash
+      end
+
       private
       def chain_previous_block
-
+        unless self.previous_block_hash.nil?
+          self.previous_block = Block.with_block_hash(self.previous_block_hash).first
+          save!
+        end
       end
 
     end
