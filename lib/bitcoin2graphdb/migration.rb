@@ -7,14 +7,23 @@ module Bitcoin2Graphdb
     end
 
     def run
-      run_with_height(current_block_height + 1)
+      loop {
+        run_with_height(current_block_height + 1)
+      }
     end
 
     def run_with_height(block_height)
       puts "start migration for block height = #{block_height}. #{Time.now}"
-      Neo4j::Transaction.run do |tx|
-        Graphdb::Model::Block.create_from_block_height(block_height)
-        @block_height = block_height
+      begin
+        Neo4j::Transaction.run do |tx|
+          Graphdb::Model::Block.create_from_block_height(block_height)
+          @block_height = block_height
+        end
+      rescue OpenAssets::Provider::ApiError => e
+        if e.message == '{"code"=>-8, "message"=>"Block height out of range"}'
+          puts "Block height out of range. sleep 10 min."
+          sleep 600
+        end
       end
       puts "end migration for block height #{block_height}. #{Time.now}"
     end

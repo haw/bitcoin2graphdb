@@ -6,48 +6,33 @@ require 'optparse'
 require 'json'
 require 'yaml'
 require 'active_support/all'
+require 'daemon_spawn'
 
-options = {}
-OptionParser.new do |opts|
-  opts.banner = "Usage: bitcoin2graphdb -c config.json start"
-
-  opts.on("-c PATH", "--config PATH", "config load path") do |path|
-    options[:config] = path
+class Bitcoin2GraphdbDaemon < DaemonSpawn::Base
+  def start(args)
+    puts "Bitcoin2GraphdbDaemon start : #{Time.now}"
+    migration = Bitcoin2Graphdb::Migration.new(config(args)[:bitcoin2graphdb])
+    migration.run
   end
-  opts.on("-v", "--verbose", "verbose output") do |v|
-    options[:verbose] = v
-  end
-end.parse!
 
-puts "Welcome to Bitcoin2Graphdb\n\n"
-
-if options[:config]
-  if !File.exists?(options[:config])
-    puts "File not found: #{options[:config]}"
-    exit(1)
+  def stop
+    puts "Bitcoin2GraphdbDaemon stop : #{Time.now}"
   end
-  config = YAML.load(File.read(options[:config])).deep_symbolize_keys
-  # config = JSON.parse(File.read(options[:config]), {symbolize_names: true})
-else
-  puts "config file not specified."
-  exit(1)
+
+  private
+  def config(args)
+    config_index = args.index("-c")
+    if config_index && args.length > config_index + 1 && File.exists?(args[config_index + 1])
+      YAML.load(File.read(args[config_index + 1])).deep_symbolize_keys
+    else
+      raise ArgumentError.new 'configuration file not specified or does not exist.'
+    end
+  end
 end
 
-$migration = Bitcoin2Graphdb::Migration.new(config)
-$migration.run
-
-=begin
-command = ARGV.shift
-
-if command == 'console'
-  require "irb"
-  puts "API is available as $oa:"
-  IRB.start
-  puts "bye, bye"
-elsif command && $oa.respond_to?(command)
-  puts "running command '#{command}'"
-  puts $oa.send(command, *ARGV).inspect
-else
-  puts "use 'openassets --help' for help"
-end
-=end
+Bitcoin2GraphdbDaemon.spawn!({
+    working_dir: Dir.pwd,
+    log_file: File.expand_path(Dir.pwd + '/bitcoin2graphdb.log'),
+    pid_file: File.expand_path(Dir.pwd + '/bitcoin2graphdb.pid'),
+    sync_log: true,
+    singleton: true})

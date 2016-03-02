@@ -1,6 +1,6 @@
-# Bitcoin2graphdb
+# Bitcoin2Graphdb
 
-TODO
+A tool for import Bitcoin blockchain data into neo4j database.
 
 ## Installation
 
@@ -18,9 +18,42 @@ Or install it yourself as:
 
     $ gem install bitcoin2graphdb
 
+## Requirements
+
+This tool requires the following software.
+
+* Bitcoin Core
+* Neo4j
+
+## Configuration
+
+This tool requires the following configuration file.
+
+```yaml
+bitcoin2graphdb:
+  bitcoin:
+    network: 'mainnet or testnet'
+    rpc:
+      user: 'Bitcoin Core rpc user.'
+      password: 'Bitcoin Core rpc password.'
+      schema: 'Bitcoin Core server schema. ex, http'
+      port: 'Bitcoin Core server port. ex, 8332'
+      host: 'Bitcoin Core server host. ex, xxx.xxx.xxx.xxx'
+  neo4j:
+    server: 'neo4j server url. ex, http://localhost:7474'
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+* Start bitcoin2graphdb daemon
+```
+$ bitcoin2graphdb start -c <configuration file path>
+```
+
+* Stop bitcoin2graphdb daemon
+```
+$ bitcoin2graphdb stop 
+```
 
 ## Contributing
 
