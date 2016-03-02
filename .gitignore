@@ -12,3 +12,5 @@
 config.yml
 cache.db
 db/neo4j
+bitcoin2graphdb.log
+bitcoin2graphdb.pid
