@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["azuchi"]
   spec.email         = ["azuchi@haw.co.jp"]
 
-  spec.summary       = %q{This is a migration tool to import Blockchain data to neo4j}
-  spec.description   = %q{This is a migration tool to import Blockchain data to neo4j}
+  spec.summary       = %q{A tool for import Bitcoin blockchain data into neo4j database.}
+  spec.description   = %q{A tool for import Bitcoin blockchain data into neo4j database.}
   spec.homepage      = "https://github.com/haw-itn/bitcoin2graphdb"
   spec.license       = "MIT"
 
