@@ -2,6 +2,8 @@
 
 A tool for import Bitcoin blockchain data into neo4j database.
 
+![neo4jgraph](https://raw.githubusercontent.com/wiki/haw-itn/bitcoin2graphdb/images/graph.png)
+
 ## Installation
 
 Add this line to your application's Gemfile:
