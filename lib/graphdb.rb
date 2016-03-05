@@ -10,6 +10,7 @@ module Graphdb
 
   def self.configure
     yield configuration if block_given?
+    configuration.load_extensions
   end
 
 end

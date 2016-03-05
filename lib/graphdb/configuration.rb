@@ -1,15 +1,13 @@
 module Graphdb
   class Configuration
 
+    include Graphdb::Model::Extensions
+
     attr_accessor :neo4j_server
-    attr_accessor :extensions
 
     def initialize
-      @extensions = {}
+      @extensions = []
       @neo4j_server = 'http://localhost:7474'
-    end
-
-    def load_extensions
     end
 
   end

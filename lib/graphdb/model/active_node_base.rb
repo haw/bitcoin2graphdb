@@ -7,6 +7,9 @@ module Graphdb
       property :created_at
       property :updated_at
 
+      def self.remove_module(m)
+        m.instance_methods.each{|m| undef_method(m)}
+      end
     end
   end
 end
