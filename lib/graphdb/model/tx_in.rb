@@ -10,9 +10,11 @@ module Graphdb
       property :sequence
 
       has_one :out, :transaction, type: :transaction, model_class: Transaction
-      has_one :in, :out_point, origin: :spent_input, model_class: TxOut
+      has_one :in, :out_point, origin: :out_point, model_class: TxOut
 
       validates :sequence, :presence => true
+
+      after_create :add_out_point_rel
 
       def self.create_from_hash(hash)
         tx_in = new
@@ -25,9 +27,16 @@ module Graphdb
         tx_in.coinbase = hash['coinbase']
         tx_in.sequence = hash['sequence']
         tx_in.save!
-        tx_in.out_point = TxOut.find_by_outpoint(tx_in.txid, tx_in.vout)
-        tx_in.save!
         tx_in
+      end
+
+      private
+      def add_out_point_rel
+        tx_out = Graphdb::Model::TxOut.find_by_outpoint(self.txid, self.vout)
+        if tx_out
+          self.out_point = tx_out
+          save!
+        end
       end
 
     end

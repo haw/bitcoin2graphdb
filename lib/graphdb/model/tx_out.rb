@@ -11,7 +11,7 @@ module Graphdb
 
       has_one :out, :transaction, type: :transaction, model_class: Transaction
       has_many :out, :addresses, type: :address, model_class: Address
-      has_one :out, :spent_input, type: :tx_in, model_class: TxIn
+      has_one :out, :out_point, type: :spent_input, model_class: TxIn
 
       validates :value, :presence => true
       validates :n, :presence => true
@@ -39,7 +39,7 @@ module Graphdb
       end
 
       def self.find_by_outpoint(txid, n)
-        tx = Transaction.with_txid(txid).first
+        tx = Graphdb::Model::Transaction.with_txid(txid).first
         if tx
           tx.outputs.each{|o|
             return o if o.n == n

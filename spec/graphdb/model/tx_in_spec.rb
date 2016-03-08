@@ -21,10 +21,6 @@ describe Graphdb::Model::TxIn do
     context 'not coinbase' do
       before{
         Graphdb::Model::Transaction.create_from_txid('2570975c55f74f77417a3da625cf0e1903e24acdfd6c1cb51e4f3c7c0fa313f0')
-        tx_out = Graphdb::Model::TxOut.new
-        tx_out.n = 0
-        tx_out.value = 0.00400000
-        tx_out.save!
       }
       subject {
         hash2 = {'txid' => '2570975c55f74f77417a3da625cf0e1903e24acdfd6c1cb51e4f3c7c0fa313f0','vout' => 0,
