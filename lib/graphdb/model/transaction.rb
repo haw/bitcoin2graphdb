@@ -20,6 +20,8 @@ module Graphdb
       validates :version, :presence => true
       validates :block_hash, :presence => true
 
+      scope :with_txid, ->(txid){where(txid: txid)}
+
       def self.create_from_txid(txid)
         tx = new
         hash = load_tx(txid)
