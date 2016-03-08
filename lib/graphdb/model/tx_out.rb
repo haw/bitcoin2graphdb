@@ -15,6 +15,8 @@ module Graphdb
       validates :value, :presence => true
       validates :n, :presence => true
 
+      scope :with_out_index, -> (n){where(n: n)}
+
       def self.create_from_hash(hash)
         tx_out = new
         tx_out.value = hash['value']
@@ -33,6 +35,15 @@ module Graphdb
         end
         tx_out.save!
         tx_out
+      end
+
+      def self.find_by_outpoint(txid, n)
+        tx = Transaction.with_txid(txid).first
+        if tx
+          tx.outputs.each{|o|
+            return o if o.n == n
+          }
+        end
       end
 
     end
