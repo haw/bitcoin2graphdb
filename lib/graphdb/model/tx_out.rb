@@ -11,6 +11,7 @@ module Graphdb
 
       has_one :out, :transaction, type: :transaction, model_class: Transaction
       has_many :out, :addresses, type: :address, model_class: Address
+      has_one :out, :spent_input, type: :tx_in, model_class: TxIn
 
       validates :value, :presence => true
       validates :n, :presence => true

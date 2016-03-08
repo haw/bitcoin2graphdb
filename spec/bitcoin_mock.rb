@@ -20,6 +20,7 @@ module BitcoinMock
     load_tx_mock(provider_mock, 'a983a4d0326ddb177107431515832205c843a61f0bb518be459134f3bdd035db')
     load_tx_mock(provider_mock, '05587f30d146126f5d81ff17c24177645669df3d75f69b50ae21d24e5ef162e3')
     load_tx_mock(provider_mock, 'bfab0b40e962f01a8341dec421e5183ab63a92faef4a6257d3021f0c3479b89e')
+    load_tx_mock(provider_mock, '2570975c55f74f77417a3da625cf0e1903e24acdfd6c1cb51e4f3c7c0fa313f0')
   end
 
   def load_block(provider_mock)
