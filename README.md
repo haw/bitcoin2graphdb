@@ -43,6 +43,9 @@ bitcoin2graphdb:
       host: 'Bitcoin Core server host. ex, xxx.xxx.xxx.xxx'
   neo4j:
     server: 'neo4j server url. ex, http://localhost:7474'
+    basic_auth:
+      username: 'neo4j username'
+      password: 'neo4j password'
 ```
 
 ## Usage
