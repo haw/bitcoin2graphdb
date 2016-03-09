@@ -11,14 +11,7 @@ describe Graphdb::Model::Extensions do
 
   describe 'load extensions' do
 
-    context 'load open assets extension' do
-      before {
-        Graphdb::Model.send(:remove_const, :Transaction)
-        load 'graphdb/model/transaction.rb'
-        Graphdb.configure do |config|
-          config.extensions << 'open_assets'
-        end
-      }
+    context 'load open assets extension', :extensions => 'open_assets' do
       subject{
         Graphdb::Model::Transaction.new
       }
@@ -29,13 +22,6 @@ describe Graphdb::Model::Extensions do
     end
 
     context 'does not load extensions' do
-      before {
-        Graphdb::Model.send(:remove_const, :Transaction)
-        load 'graphdb/model/transaction.rb'
-        Graphdb.configure do |config|
-          config.extensions = []
-        end
-      }
       subject{
         Graphdb::Model::Transaction.new
       }

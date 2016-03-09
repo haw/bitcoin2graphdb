@@ -9,7 +9,18 @@ RSpec.configure do |config|
   DatabaseCleaner[:neo4j, connection: {type: :server_db, path: 'http://localhost:7475'}].strategy = :transaction
   include BitcoinMock
 
-  config.before(:each) do
+  config.before(:each) do |example|
+    Graphdb::Model.send(:remove_const, :Transaction)
+    load 'graphdb/model/transaction.rb'
+    if example.metadata[:extensions].nil?
+      Graphdb.configure do |gconfig|
+        gconfig.extensions = []
+      end
+    else
+      Graphdb.configure do |gconfig|
+        gconfig.extensions << 'open_assets'
+      end
+    end
     DatabaseCleaner.start
     setup_mock
   end
