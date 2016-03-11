@@ -10,17 +10,6 @@ RSpec.configure do |config|
   include BitcoinMock
 
   config.before(:each) do |example|
-    Graphdb::Model.send(:remove_const, :Transaction)
-    load 'graphdb/model/transaction.rb'
-    if example.metadata[:extensions].nil?
-      Graphdb.configure do |gconfig|
-        gconfig.extensions = []
-      end
-    else
-      Graphdb.configure do |gconfig|
-        gconfig.extensions << 'open_assets'
-      end
-    end
     DatabaseCleaner.start
     setup_mock
   end
