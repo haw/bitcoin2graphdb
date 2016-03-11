@@ -8,12 +8,10 @@ module Graphdb
           extend Graphdb::Model::Extensions::Base
 
           def self.prepended(base)
-            puts "prepended"
             class << base
               self.prepend(ClassMethods)
             end
             base.class_eval do
-              puts "class_eval"
               # asset output type (:issuance, :transfer, :uncolored)
               property :output_type
             end
