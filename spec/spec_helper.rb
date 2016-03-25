@@ -12,10 +12,17 @@ RSpec.configure do |config|
   config.before(:each) do |example|
     DatabaseCleaner.start
     setup_mock
+    extension = example.metadata[:extension].nil? ? [] : [example.metadata[:extension]]
+    Graphdb.configure do |gconfig|
+      gconfig.extensions = extension
+    end
   end
 
-  config.after(:each) do
+  config.after(:each) do |example|
     DatabaseCleaner.clean
+    unless example.metadata[:extensions]
+      Graphdb.configuration.unload_extensions
+    end
   end
 
 end

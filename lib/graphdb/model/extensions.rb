@@ -17,6 +17,11 @@ module Graphdb
         end
       end
 
+      def unload_extensions
+        Graphdb::Model.send(:remove_const, :Transaction)
+        load 'graphdb/model/transaction.rb'
+      end
+
     end
   end
 end
