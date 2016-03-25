@@ -5,7 +5,7 @@ describe Graphdb do
 
     context 'default configuration' do
       subject{
-        Graphdb.configuration
+        Graphdb::Configuration.new
       }
       it do
         expect(subject.extensions.empty?).to be true
