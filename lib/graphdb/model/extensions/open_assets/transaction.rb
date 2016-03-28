@@ -3,7 +3,7 @@ module Graphdb
     module Extensions
       module OpenAssets
 
-        module OaTransaction
+        module Transaction
 
           extend Graphdb::Model::Extensions::Base
 

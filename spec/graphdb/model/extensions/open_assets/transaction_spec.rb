@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
 
   before{
-    Graphdb::Model::Transaction.prepend(Graphdb::Model::Extensions::OpenAssets::OaTransaction)
+    Graphdb::Model::Transaction.prepend(Graphdb::Model::Extensions::OpenAssets::Transaction)
   }
 
   describe 'create oa transaction' do
