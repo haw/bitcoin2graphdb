@@ -60,6 +60,31 @@ $ bitcoin2graphdb start -c <configuration file path>
 $ bitcoin2graphdb stop 
 ```
 
+## Extensions
+
+Bitcoin2Graphdb currently supports following extensions.
+
+|Extension Key Name|Description|
+|:-----------|:------------|
+|open_assets| Add Open Assets Protocol support.|
+
+* Open Assets Protocol  
+
+To enable extension, add an extension key name to enable the Configuration file like following.
+
+```yaml
+bitcoin2graphdb:
+...
+  extensions:
+   - open_assets
+```
+
+# Testing
+
+When you run rspec, you need to run neo4j test server(http://localhost:7475) in advance.   
+Others are the same as normal rspec. 
+
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/haw-itn/bitcoin2graphdb. 
