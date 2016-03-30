@@ -1,0 +1,14 @@
+bitcoin2graphdb:
+  bitcoin:
+    network: 'testnet'
+    rpc:
+      user: 'user'
+      password: 'password'
+      schema: 'http'
+      port: '8332'
+      host: 'localhost'
+  neo4j:
+    server: 'http://localhost:7475'
+    basic_auth:
+      username: 'neo4j'
+      password: 'password'

@@ -3,6 +3,10 @@ module Bitcoin2Graphdb
   class Migration
 
     def initialize(config)
+      Graphdb.configure do |c|
+        c.neo4j_server = config[:neo4j][:server]
+        c.extensions = config[:extensions] unless config[:extensions].nil?
+      end
       Bitcoin2Graphdb::Bitcoin.provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new(config[:bitcoin])
       Neo4j::Session.open(:server_db, config[:neo4j][:server], {basic_auth: config[:neo4j][:basic_auth]})
     end
