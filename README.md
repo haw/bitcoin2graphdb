@@ -66,8 +66,7 @@ Bitcoin2Graphdb currently supports following extensions.
 
 |Extension Key Name|Description|
 |:-----------|:------------|
-|open_assets| Add Open Assets Protocol support.|
-
+|open_assets| Add Open Assets Protocol support. If this extension is enabled, the asset quantity and Graphdb::Model::AssetId association will be added to the Graphdb::Model::TxOut.|
 * Open Assets Protocol  
 
 To enable extension, add an extension key name to enable the Configuration file like following.
@@ -76,7 +75,7 @@ To enable extension, add an extension key name to enable the Configuration file 
 bitcoin2graphdb:
 ...
   extensions:
-   - open_assets
+   - 'open_assets'
 ```
 
 # Testing
