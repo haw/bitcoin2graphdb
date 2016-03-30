@@ -4,7 +4,7 @@ module Bitcoin2Graphdb
 
     def initialize(config)
       Bitcoin2Graphdb::Bitcoin.provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new(config[:bitcoin])
-      Neo4j::Session.open(:server_db, config[:neo4j][:server_url], {basic_auth: config[:neo4j][:basic_auth]})
+      Neo4j::Session.open(:server_db, config[:neo4j][:server], {basic_auth: config[:neo4j][:basic_auth]})
     end
 
     def run
