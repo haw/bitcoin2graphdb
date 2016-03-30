@@ -10,10 +10,7 @@ module Graphdb
 
       def load_extensions
         extensions.each do |e|
-          load_module = "Graphdb::Model::Extensions::#{e.camelize}".constantize
-          load_module::EXTENSIONS_TARGETS.each do |target|
-            target.origin_class.send(:prepend, target)
-          end
+          autoload e.camelize, "graphdb/model/extensions/#{e}"
         end
       end
 

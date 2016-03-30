@@ -4,6 +4,7 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
 
   before{
     Graphdb::Model::Transaction.prepend(Graphdb::Model::Extensions::OpenAssets::Transaction)
+    Graphdb::Model::TxOut.prepend(Graphdb::Model::Extensions::OpenAssets::TxOut)
   }
 
   describe 'create oa transaction' do
@@ -13,6 +14,9 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
       }
       it do
         expect(subject.output_type).to eq('uncolored')
+        expect(subject.outputs.length).to eq(1)
+        expect(subject.outputs[0].asset_quantity).to be nil
+        expect(subject.outputs[0].asset_id).to be nil
       end
     end
 

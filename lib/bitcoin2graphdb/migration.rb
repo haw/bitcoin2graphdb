@@ -1,3 +1,4 @@
+require 'base'
 module Bitcoin2Graphdb
   class Migration
 
@@ -37,3 +38,6 @@ module Bitcoin2Graphdb
 
   end
 end
+config = YAML.load(File.read("config.yml")).deep_symbolize_keys
+migration = Bitcoin2Graphdb::Migration.new(config[:bitcoin2graphdb])
+migration.run

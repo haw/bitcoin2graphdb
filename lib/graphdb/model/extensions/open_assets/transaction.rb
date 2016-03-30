@@ -5,8 +5,6 @@ module Graphdb
 
         module Transaction
 
-          extend Graphdb::Model::Extensions::Base
-
           def self.prepended(base)
             class << base
               self.prepend(ClassMethods)
@@ -35,8 +33,6 @@ module Graphdb
               tx
             end
           end
-
-          set_origin Graphdb::Model::Transaction
 
         end
 

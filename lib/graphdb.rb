@@ -13,4 +13,5 @@ module Graphdb
     configuration.load_extensions
   end
 
+  Neo4j::Config[:association_model_namespace] = Graphdb::Model
 end
