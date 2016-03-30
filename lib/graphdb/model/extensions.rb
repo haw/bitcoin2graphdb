@@ -4,8 +4,6 @@ module Graphdb
       autoload :Base, 'graphdb/model/extensions/base'
       autoload :OpenAssets, 'graphdb/model/extensions/open_assets'
 
-      EXTENSIONS = {open_assets: 'graphdb/model/extensions/open_assets'}
-
       attr_accessor :extensions
 
       def load_extensions
