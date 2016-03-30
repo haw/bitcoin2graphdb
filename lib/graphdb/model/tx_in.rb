@@ -10,7 +10,7 @@ module Graphdb
       property :sequence
 
       has_one :out, :transaction, type: :transaction, model_class: Transaction
-      has_one :in, :out_point, origin: :out_point, model_class: TxOut
+      has_one :in, :out_point, origin: :out_point, model_class: Graphdb::Model::TxOut
 
       validates :sequence, :presence => true
 
