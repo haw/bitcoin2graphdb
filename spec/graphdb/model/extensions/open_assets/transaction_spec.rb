@@ -15,8 +15,8 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
       it do
         expect(subject.output_type).to eq('uncolored')
         expect(subject.outputs.length).to eq(1)
-        expect(subject.outputs[0].asset_quantity).to be nil
-        # expect(subject.outputs[0].asset_id).to be nil
+        expect(subject.outputs[0].asset_quantity).to eq(0)
+        expect(subject.outputs[0].asset_id).to be nil
       end
     end
 
@@ -26,6 +26,15 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
       }
       it do
         expect(subject.output_type).to eq('issuance')
+        expect(subject.outputs.length).to eq(3)
+        expect(subject.outputs[0].asset_quantity).to eq(60000)
+        expect(subject.outputs[0].asset_id.asset_id).to eq('oWHnxoBY9dxyGDC741vk84uniFmHoeo24T')
+        # marker output
+        expect(subject.outputs[1].asset_quantity).to eq(0)
+        expect(subject.outputs[1].asset_id).to be nil
+        # change
+        expect(subject.outputs[2].asset_quantity).to eq(0)
+        expect(subject.outputs[2].asset_id).to be nil
       end
     end
 
@@ -35,6 +44,26 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
       }
       it do
         expect(subject.output_type).to eq('transfer')
+        expect(subject.outputs.length).to eq(8)
+        # marker output
+        expect(subject.outputs[0].asset_quantity).to eq(0)
+        expect(subject.outputs[0].asset_id).to be nil
+        # colored output
+        expect(subject.outputs[1].asset_quantity).to eq(20000)
+        expect(subject.outputs[1].asset_id.asset_id).to eq('oJkgThW1JdYe5K4ydMjVjrUKzux6vmNMry')
+        expect(subject.outputs[2].asset_quantity).to eq(20000)
+        expect(subject.outputs[2].asset_id.asset_id).to eq('ocaizpC49ZCbtR9fFiQ7VwibJuyXRMomt3')
+        expect(subject.outputs[3].asset_quantity).to eq(60000)
+        expect(subject.outputs[3].asset_id.asset_id).to eq('oWHnxoBY9dxyGDC741vk84uniFmHoeo24T')
+        expect(subject.outputs[4].asset_quantity).to eq(20000)
+        expect(subject.outputs[4].asset_id.asset_id).to eq('oVxyUGXLJs7rcodDRetykZFY71WtgZKpFT')
+        expect(subject.outputs[5].asset_quantity).to eq(20000)
+        expect(subject.outputs[5].asset_id.asset_id).to eq('oVxyUGXLJs7rcodDRetykZFY71WtgZKpFT')
+        expect(subject.outputs[6].asset_quantity).to eq(60000)
+        expect(subject.outputs[6].asset_id.asset_id).to eq('oVxyUGXLJs7rcodDRetykZFY71WtgZKpFT')
+        # change
+        expect(subject.outputs[7].asset_quantity).to eq(0)
+        expect(subject.outputs[7].asset_id).to be nil
       end
     end
   end

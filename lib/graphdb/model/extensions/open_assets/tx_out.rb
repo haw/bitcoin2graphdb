@@ -11,7 +11,7 @@ module Graphdb
             end
             base.class_eval do
               property :asset_quantity, type: Integer
-              # has_one :out, :asset_id, type: :asset_id
+              has_one :out, :asset_id, type: :asset_id
             end
           end
 
