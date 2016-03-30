@@ -19,18 +19,25 @@ module Graphdb
 
             def create_from_txid(txid)
               tx = super(txid)
+              tx.output_type = output_type(txid)
+              tx.save!
+              tx
+            end
+
+            private
+            def output_type(txid)
               outputs = Bitcoin2Graphdb::Bitcoin.provider.oa_outputs(txid)
+              output_type = 'uncolored'
               outputs.each do |o|
                 if o['output_type'] == 'issuance'
-                  tx.output_type = 'issuance'
+                  output_type = 'issuance'
                   break
                 elsif o['output_type'] == 'transfer'
-                  tx.output_type = 'transfer'
+                  output_type = 'transfer'
                   break
                 end
               end
-              tx.output_type = 'uncolored' if tx.output_type.nil?
-              tx
+              output_type
             end
           end
 
