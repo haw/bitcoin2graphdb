@@ -8,7 +8,8 @@ module Bitcoin2Graphdb
         c.extensions = config[:extensions] unless config[:extensions].nil?
       end
       Bitcoin2Graphdb::Bitcoin.provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new(config[:bitcoin])
-      Neo4j::Session.open(:server_db, config[:neo4j][:server], {basic_auth: config[:neo4j][:basic_auth]})
+      Neo4j::Session.open(:server_db, config[:neo4j][:server],
+                          {basic_auth: config[:neo4j][:basic_auth], initialize: {request: {open_timeout: 2, timeout: 600}}})
     end
 
     def run
@@ -19,17 +20,18 @@ module Bitcoin2Graphdb
 
     def run_with_height(block_height)
       puts "start migration for block height = #{block_height}. #{Time.now}"
-      begin
-        Neo4j::Transaction.run do |tx|
+      Neo4j::Transaction.run do |tx|
+        begin
           Graphdb::Model::Block.create_from_block_height(block_height)
           @block_height = block_height
-        end
-      rescue OpenAssets::Provider::ApiError => e
-        if e.message == '{"code"=>-8, "message"=>"Block height out of range"}'
-          puts "Block height out of range. sleep 10 min."
-          sleep 600
-        else
-          raise e
+        rescue OpenAssets::Provider::ApiError => e
+          if e.message == '{"code"=>-8, "message"=>"Block height out of range"}'
+            puts "Block height out of range. sleep 10 min."
+            sleep 600
+          else
+            tx.failure
+            raise e
+          end
         end
       end
       puts "end migration for block height #{block_height}. #{Time.now}"
