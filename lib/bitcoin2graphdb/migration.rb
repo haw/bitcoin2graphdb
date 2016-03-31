@@ -28,6 +28,8 @@ module Bitcoin2Graphdb
         if e.message == '{"code"=>-8, "message"=>"Block height out of range"}'
           puts "Block height out of range. sleep 10 min."
           sleep 600
+        else
+          raise e
         end
       end
       puts "end migration for block height #{block_height}. #{Time.now}"
