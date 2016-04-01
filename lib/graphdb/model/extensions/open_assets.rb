@@ -5,8 +5,8 @@ module Graphdb
 
     module Extensions
       module OpenAssets
-        autoload :TxOut, 'graphdb/model/extensions/open_assets/tx_out'
-        autoload :Transaction, 'graphdb/model/extensions/open_assets/transaction'
+        Graphdb::Model::Extensions::OpenAssets.autoload :TxOut, 'graphdb/model/extensions/open_assets/tx_out'
+        Graphdb::Model::Extensions::OpenAssets.autoload :Transaction, 'graphdb/model/extensions/open_assets/transaction'
 
         Graphdb::Model::Transaction.prepend(Graphdb::Model::Extensions::OpenAssets::Transaction)
         Graphdb::Model::TxOut.prepend(Graphdb::Model::Extensions::OpenAssets::TxOut)

@@ -8,7 +8,7 @@ module Graphdb
 
       def load_extensions
         extensions.each do |e|
-          autoload e.camelize, "graphdb/model/extensions/#{e}"
+          require "graphdb/model/extensions/#{e}"
         end
       end
 
