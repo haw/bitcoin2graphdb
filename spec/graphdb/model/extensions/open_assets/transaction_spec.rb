@@ -13,7 +13,6 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
         Graphdb::Model::Transaction.create_from_txid('f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba')
       }
       it do
-        expect(subject.output_type).to eq('uncolored')
         expect(subject.outputs.length).to eq(1)
         expect(subject.outputs[0].asset_quantity).to eq(0)
         expect(subject.outputs[0].asset_id).to be nil
@@ -25,7 +24,6 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
         Graphdb::Model::Transaction.create_from_txid('fec95562b63e293d3cc45673be80a849a33eb121f244c74a5456515b28c62b1b')
       }
       it do
-        expect(subject.output_type).to eq('issuance')
         expect(subject.outputs.length).to eq(3)
         expect(subject.outputs[0].asset_quantity).to eq(60000)
         expect(subject.outputs[0].asset_id.asset_id).to eq('oWHnxoBY9dxyGDC741vk84uniFmHoeo24T')
@@ -43,7 +41,6 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
         Graphdb::Model::Transaction.create_from_txid('b126aacedc27d12f1d3d653bd7430d7de6ad9ccb90ab116b3f0fd66175ffb556')
       }
       it do
-        expect(subject.output_type).to eq('transfer')
         expect(subject.outputs.length).to eq(8)
         # marker output
         expect(subject.outputs[0].asset_quantity).to eq(0)

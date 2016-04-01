@@ -9,10 +9,6 @@ module Graphdb
             class << base
               self.prepend(ClassMethods)
             end
-            base.class_eval do
-              # asset output type (:issuance, :transfer, :uncolored)
-              property :output_type
-            end
           end
 
           module ClassMethods
@@ -20,7 +16,6 @@ module Graphdb
             def create_from_txid(txid)
               tx = super(txid)
               outputs = Bitcoin2Graphdb::Bitcoin.provider.oa_outputs(txid)
-              output_type = 'uncolored'
               outputs.each do |o|
                 tx_out = tx.outputs[o['vout']]
                 tx_out.asset_quantity = o['asset_quantity']
@@ -29,13 +24,7 @@ module Graphdb
                   tx_out.asset_id = asset_id
                 end
                 tx_out.save!
-                if o['output_type'] == 'issuance'
-                  output_type = 'issuance'
-                elsif o['output_type'] == 'transfer' && output_type != 'issuance'
-                  output_type = 'transfer'
-                end
               end
-              tx.output_type = output_type
               tx.save!
               tx
             end
