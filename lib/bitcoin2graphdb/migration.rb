@@ -19,7 +19,7 @@ module Bitcoin2Graphdb
 
     def run_with_height(block_height)
       puts "start migration for block height = #{block_height}. #{Time.now}"
-      Neo4j::Transaction.run do |tx|
+      # Neo4j::Transaction.run do |tx|
         begin
           Graphdb::Model::Block.create_from_block_height(block_height)
           @block_height = block_height
@@ -28,11 +28,11 @@ module Bitcoin2Graphdb
             puts "Block height out of range. sleep 10 min."
             sleep 600
           else
-            tx.failure
+            # tx.failure
             raise e
           end
         end
-      end
+      # end
       puts "end migration for block height #{block_height}. #{Time.now}"
     end
 
