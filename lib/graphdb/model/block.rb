@@ -33,6 +33,7 @@ module Graphdb
 
       scope :latest, -> {order(height: 'DESC').first}
       scope :with_block_hash, -> (block_hash){where(block_hash: block_hash)}
+      scope :with_height, -> (height){where(height: height)}
 
       def self.create_from_block_height(block_height)
         block = new

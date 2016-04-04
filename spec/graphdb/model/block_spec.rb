@@ -42,7 +42,7 @@ describe Graphdb::Model::Block do
     end
   end
 
-  describe 'with block hash' do
+  describe 'with block hash scope' do
     before {
       Graphdb::Model::Block.create_from_block_height(721046)
     }
@@ -54,6 +54,20 @@ describe Graphdb::Model::Block do
       expect(Graphdb::Model::Block.with_block_hash('00000000000036ffc3e2e3c247bab16e151be44a34207f822ffd7c7b879541cc').first).to be nil
     end
   end
+
+  describe 'with height scope' do
+    before{
+      Graphdb::Model::Block.create_from_block_height(722039)
+      Graphdb::Model::Block.create_from_block_height(721046)
+    }
+    it do
+      block = Graphdb::Model::Block.with_height(722039).first
+      expect(block.height).to eq(722039)
+      expect(block.block_hash).to eq('0000000000001521a7fd176803e2a7c3b327617319837144d6fa326fad56641e')
+      expect(Graphdb::Model::Block.with_height(721047).first).to be nil
+    end
+  end
+
 
   describe 'genesis_block?' do
     before{
