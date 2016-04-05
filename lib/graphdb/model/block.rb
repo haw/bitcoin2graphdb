@@ -31,7 +31,7 @@ module Graphdb
 
       after_create :chain_previous_block
 
-      scope :latest, -> {order(height: 'DESC').first}
+      scope :latest, -> {order(height: 'DESC')}
       scope :with_block_hash, -> (block_hash){where(block_hash: block_hash)}
       scope :with_height, -> (height){where(height: height)}
 

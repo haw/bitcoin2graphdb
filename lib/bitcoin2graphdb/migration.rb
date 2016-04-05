@@ -39,7 +39,7 @@ module Bitcoin2Graphdb
     private
     def current_block_height
       return @block_height if @block_height
-      block = Graphdb::Model::Block.latest
+      block = Graphdb::Model::Block.latest.first
       @block_height = block.nil? ? -1 : block.height
     end
 

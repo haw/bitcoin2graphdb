@@ -37,7 +37,7 @@ describe Graphdb::Model::Block do
       Graphdb::Model::Block.create_from_block_height(721046)
     }
     it do
-      block = Graphdb::Model::Block.latest
+      block = Graphdb::Model::Block.latest.first
       expect(block.height).to eq(722039)
     end
   end
