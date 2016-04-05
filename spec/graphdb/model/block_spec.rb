@@ -58,7 +58,6 @@ describe Graphdb::Model::Block do
   describe 'with height scope' do
     before{
       Graphdb::Model::Block.create_from_block_height(722039)
-      Graphdb::Model::Block.create_from_block_height(721046)
     }
     it do
       block = Graphdb::Model::Block.with_height(722039).first
@@ -68,7 +67,6 @@ describe Graphdb::Model::Block do
     end
   end
 
-
   describe 'genesis_block?' do
     before{
       @genesis_block = Graphdb::Model::Block.create_from_block_height(0)
@@ -77,6 +75,20 @@ describe Graphdb::Model::Block do
     it do
       expect(@genesis_block.genesis_block?).to be true
       expect(@non_genesis_block.genesis_block?).to be false
+    end
+  end
+
+  describe 'destroy with association' do
+    before{
+      Graphdb::Model::Block.create_from_block_height(721046)
+    }
+    it do
+      block = Graphdb::Model::Block.with_height(721046).first
+      block.destroy
+      expect(Graphdb::Model::Transaction.count).to eq(0)
+      expect(Graphdb::Model::TxIn.count).to eq(0)
+      expect(Graphdb::Model::TxOut.count).to eq(0)
+      expect(Graphdb::Model::Address.count).to eq(3)
     end
   end
 end

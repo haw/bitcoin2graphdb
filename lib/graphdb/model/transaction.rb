@@ -12,8 +12,8 @@ module Graphdb
       property :confirmations, type: Integer
 
       has_one :out, :block, type: :block
-      has_many :in, :inputs, origin: :transaction, model_class: TxIn
-      has_many :in, :outputs, origin: :transaction, model_class: TxOut
+      has_many :in, :inputs, origin: :transaction, model_class: TxIn, dependent: :destroy
+      has_many :in, :outputs, origin: :transaction, model_class: TxOut, dependent: :destroy
 
       validates :hex, :presence => true
       validates :txid, :presence => true

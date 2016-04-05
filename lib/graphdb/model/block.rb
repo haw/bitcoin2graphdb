@@ -18,7 +18,7 @@ module Graphdb
       property :created_at
       property :updated_at
 
-      has_many :in, :transactions, origin: :block, model_class: Transaction
+      has_many :in, :transactions, origin: :block, model_class: Transaction, dependent: :destroy
       has_one :out, :previous_block, type: :previous_block, model_class: Block
 
       validates :block_hash, :presence => true
