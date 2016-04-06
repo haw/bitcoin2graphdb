@@ -23,6 +23,7 @@ module Graphdb
       scope :with_txid, ->(txid){where(txid: txid)}
 
       def self.create_from_txid(txid)
+        puts "create tx #{txid}"
         tx = new
         hash = load_tx(txid)
         tx.hex = hash['hex']

@@ -3,6 +3,8 @@ module Graphdb
     class Address < ActiveNodeBase
       property :address, index: :exact, constraint: :unique
 
+      has_many :in, :outputs, origin: :addresses, model_class: TxOut
+
       validates :address, presence: true
 
       scope :with_address, -> (address){where(address: address)}
