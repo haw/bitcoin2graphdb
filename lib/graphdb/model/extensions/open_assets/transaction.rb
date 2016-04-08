@@ -23,6 +23,14 @@ module Graphdb
 
           end
 
+          # Check this tx contains open assets transaction
+          def openassets_tx?
+            outputs.each do |o|
+              return true unless o.asset_id.nil?
+            end
+            false
+          end
+
         end
 
       end

@@ -17,6 +17,7 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
         expect(subject.outputs[0].asset_quantity).to eq(0)
         expect(subject.outputs[0].asset_id).to be nil
         expect(subject.outputs[0].oa_output_type).to eq('uncolored')
+        expect(subject.openassets_tx?).to be false
       end
     end
 
@@ -37,6 +38,8 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
         expect(subject.outputs[2].asset_quantity).to eq(0)
         expect(subject.outputs[2].asset_id).to be nil
         expect(subject.outputs[2].oa_output_type).to eq('uncolored')
+
+        expect(subject.openassets_tx?).to be true
       end
     end
 
@@ -73,6 +76,8 @@ describe 'Graphdb::Model::Extensions::OpenAssets::OaTransaction' do
         expect(subject.outputs[7].oa_output_type).to eq('uncolored')
         expect(subject.outputs[7].asset_quantity).to eq(0)
         expect(subject.outputs[7].asset_id).to be nil
+
+        expect(subject.openassets_tx?).to be true
       end
     end
   end
