@@ -3,7 +3,7 @@ module Graphdb
 
     class AssetId < ActiveNodeBase
       property :asset_id, index: :exact, constraint: :unique
-      has_many :in, :outputs, origin: :asset_id, model_class: AssetId
+      has_many :in, :outputs, origin: :asset_id, model_class: TxOut
 
       validates :asset_id, :presence => true
 
@@ -18,6 +18,12 @@ module Graphdb
         end
         a
       end
+
+      # Get issuance transactions
+      def issuance_txs
+        outputs.select{|o|o.oa_output_type == 'issuance'}.map{|o|o.transaction}.sort{|a,b| b.block_time <=> a.block_time}
+      end
+
     end
   end
 end
