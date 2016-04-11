@@ -3,6 +3,7 @@ module Graphdb
 
     class AssetId < ActiveNodeBase
       property :asset_id, index: :exact, constraint: :unique
+      has_many :in, :outputs, origin: :asset_id, model_class: AssetId
 
       validates :asset_id, :presence => true
 
