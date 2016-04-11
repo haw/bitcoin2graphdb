@@ -36,6 +36,57 @@ module Bitcoin2Graphdb
       puts "end migration for block height #{block_height}. #{Time.now}"
     end
 
+    def remove_block(block_height)
+      Neo4j::Transaction.run do |tx|
+        begin
+          block = Graphdb::Model::Block.with_height(block_height).first
+          if block.nil?
+            puts "block height #{block_height} does not exist."
+          else
+            block.destroy
+            puts "block height #{block_height} is deleted."
+          end
+        rescue => e
+          puts e.message
+          tx.failure
+        end
+      end
+    end
+
+    def import_tx(txid)
+      Neo4j::Transaction.run do |tx|
+        begin
+          tx = Graphdb::Model::Transaction.with_txid(txid).first
+          if tx.nil?
+            Graphdb::Model::Transaction.create_from_txid(txid)
+            puts "import #{txid} tx."
+          else
+            puts "txid #{txid} is already exist."
+          end
+        rescue => e
+          puts e.message
+          tx.failure
+        end
+      end
+    end
+
+    def remove_tx(txid)
+      Neo4j::Transaction.run do |tx|
+        begin
+          tx = Graphdb::Model::Transaction.with_txid(txid).first
+          if tx.nil?
+            puts "txid #{txid} does not exist."
+          else
+            tx.destroy
+            puts "tixd #{txid} is deleted."
+          end
+        rescue => e
+          puts e.message
+          tx.failure
+        end
+      end
+    end
+
     private
     def current_block_height
       return @block_height if @block_height
