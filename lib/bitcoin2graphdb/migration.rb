@@ -7,8 +7,9 @@ module Bitcoin2Graphdb
         c.neo4j_server = config[:neo4j][:server]
         c.extensions = config[:extensions] unless config[:extensions].nil?
       end
+      neo4j_config = {basic_auth: config[:neo4j][:basic_auth], initialize: {request: {timeout: 600, open_timeout: 5}}}
       Bitcoin2Graphdb::Bitcoin.provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new(config[:bitcoin])
-      Neo4j::Session.open(:server_db, config[:neo4j][:server], {basic_auth: config[:neo4j][:basic_auth]})
+      Neo4j::Session.open(:server_db, config[:neo4j][:server], neo4j_config)
     end
 
     def run
