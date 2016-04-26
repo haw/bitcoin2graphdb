@@ -19,7 +19,6 @@ module Graphdb
       scope :with_out_index, -> (n){where(n: n)}
 
       def self.create_from_hash(hash)
-        puts "create tx_out #{Time.now}"
         tx_out = new
         tx_out.value = hash['value']
         tx_out.n = hash['n']

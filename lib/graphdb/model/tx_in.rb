@@ -17,7 +17,6 @@ module Graphdb
       after_create :add_out_point_rel
 
       def self.create_from_hash(hash)
-        puts "create tx_in #{Time.now}"
         tx_in = new
         tx_in.txid = hash['txid']
         tx_in.vout = hash['vout']
