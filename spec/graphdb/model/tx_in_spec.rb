@@ -9,6 +9,7 @@ describe Graphdb::Model::TxIn do
         Graphdb::Model::TxIn.create_from_hash(hash1)
       }
       it do
+        allow(Graphdb::Model::TxOut).to receive(:find_by_outpoint).and_raise('coinbase has not outpoint')
         expect(subject.coinbase).to eq('0420e7494d017f062f503253482f')
         expect(subject.sequence).to eq(4294967295)
         expect(subject.txid).to be nil

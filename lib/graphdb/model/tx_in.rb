@@ -33,6 +33,7 @@ module Graphdb
 
       private
       def add_out_point_rel
+        return if self.txid.nil? && self.vout.nil?
         tx_out = Graphdb::Model::TxOut.find_by_outpoint(self.txid, self.vout)
         if tx_out
           self.out_point = tx_out
