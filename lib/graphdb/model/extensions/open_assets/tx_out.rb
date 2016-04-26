@@ -21,6 +21,7 @@ module Graphdb
           end
 
           def apply_oa_attributes(oa_out)
+            puts "oa out apply #{Time.now}"
             self.asset_quantity = oa_out['asset_quantity']
             self.oa_output_type = oa_out['output_type']
             self.asset_id = AssetId.find_or_create(oa_out['asset_id']) unless oa_out['asset_id'].nil?

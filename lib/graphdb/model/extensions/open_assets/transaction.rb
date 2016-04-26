@@ -15,6 +15,7 @@ module Graphdb
 
             def create_from_txid(txid)
               tx = super(txid)
+              puts "oa create tx = #{txid}. #{Time.now}"
               outputs = Bitcoin2Graphdb::Bitcoin.provider.oa_outputs(txid)
               graph_outputs = tx.outputs.to_a
               outputs.each{|o|
