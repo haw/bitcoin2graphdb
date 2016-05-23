@@ -2,6 +2,8 @@ require 'base'
 module Bitcoin2Graphdb
   class Migration
 
+    attr_reader :sleep_interval
+
     def initialize(config)
       Graphdb.configure do |c|
         c.neo4j_server = config[:neo4j][:server]
@@ -10,6 +12,7 @@ module Bitcoin2Graphdb
       neo4j_config = {basic_auth: config[:neo4j][:basic_auth], initialize: {request: {timeout: 600, open_timeout: 5}}}
       Bitcoin2Graphdb::Bitcoin.provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new(config[:bitcoin])
       Neo4j::Session.open(:server_db, config[:neo4j][:server], neo4j_config)
+      @sleep_interval = config[:bitcoin][:sleep_interval].nil? ? 600 : config[:bitcoin][:sleep_interval].to_i
     end
 
     def run
@@ -26,8 +29,8 @@ module Bitcoin2Graphdb
           @block_height = block_height
         rescue OpenAssets::Provider::ApiError => e
           if e.message == '{"code"=>-8, "message"=>"Block height out of range"}'
-            puts "Block height out of range. sleep 10 min."
-            sleep 600
+            puts "Block height out of range. sleep #{@sleep_interval} seconds."
+            sleep @sleep_interval
           else
             tx.failure
             raise e
