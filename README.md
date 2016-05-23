@@ -34,7 +34,7 @@ This tool requires the following configuration file.
 ```yaml
 bitcoin2graphdb:
   bitcoin:
-    network: 'mainnet or testnet'
+    network: 'mainnet or testnet or regtest'
     rpc:
       user: 'Bitcoin Core rpc user.'
       password: 'Bitcoin Core rpc password.'

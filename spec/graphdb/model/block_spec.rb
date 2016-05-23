@@ -75,6 +75,9 @@ describe Graphdb::Model::Block do
     it do
       expect(@genesis_block.genesis_block?).to be true
       expect(@non_genesis_block.genesis_block?).to be false
+      Bitcoin.network = :regtest
+      expect(@genesis_block.genesis_block?).to be false
+      Bitcoin.network = :testnet
     end
   end
 

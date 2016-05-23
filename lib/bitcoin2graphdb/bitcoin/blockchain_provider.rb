@@ -15,11 +15,6 @@ module Bitcoin2Graphdb
 
       def initialize(config)
         @api = OpenAssets::Api.new(config)
-        if @api.is_testnet?
-          ::Bitcoin.network = :testnet3
-        else
-          ::Bitcoin.network = :bitcoin
-        end
         @api
       end
 
