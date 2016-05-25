@@ -12,5 +12,9 @@ bitcoin2graphdb:
     basic_auth:
       username: 'neo4j'
       password: 'password'
+    initialize:
+      request:
+        timeout: 6000
+        open_timeout: 5
   extensions:
     - 'open_assets'
