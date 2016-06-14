@@ -1,4 +1,4 @@
-# Bitcoin2Graphdb
+# Bitcoin2Graphdb [![Build Status](https://travis-ci.org/haw-itn/bitcoin2graphdb.svg?branch=master)](https://travis-ci.org/haw-itn/bitcoin2graphdb) [![Gem Version](https://badge.fury.io/rb/bitcoin2graphdb.svg)](https://badge.fury.io/rb/bitcoin2graphdb) [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) 
 
 A tool for import Bitcoin blockchain data into neo4j database.
 
