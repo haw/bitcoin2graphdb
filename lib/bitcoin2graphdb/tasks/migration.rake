@@ -29,6 +29,17 @@ namespace :b2g do
     get_migration(args.config_path).import_tx(args.txid)
   end
 
+  desc 'Remove down to block specified from the latest block'
+  task :remove_until_block, [:block_height,:config_path] do |task, args|
+    target_block_height = args.block_height.to_i
+    puts "remove_until_block down to #{target_block_height}"
+    migration = get_migration(args.config_path)
+    current_height = Graphdb::Model::Block.latest.first.height
+    current_height.downto(target_block_height) do |height|
+      migration.remove_block(height)
+    end
+  end
+
   private
   def get_migration(config_path)
     config = YAML.load(File.read(config_path)).deep_symbolize_keys[:bitcoin2graphdb]
