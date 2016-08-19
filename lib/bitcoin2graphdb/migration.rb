@@ -13,6 +13,8 @@ module Bitcoin2Graphdb
       Bitcoin2Graphdb::Bitcoin.provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new(config[:bitcoin])
       Neo4j::Session.open(:server_db, config[:neo4j][:server], neo4j_config)
       @sleep_interval = config[:bitcoin][:sleep_interval].nil? ? 600 : config[:bitcoin][:sleep_interval].to_i
+
+      Graphdb::Model.constants.each {|const_name| Graphdb::Model.const_get(const_name)}
     end
 
     def run
