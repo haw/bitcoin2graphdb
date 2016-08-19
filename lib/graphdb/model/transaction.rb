@@ -3,7 +3,7 @@ module Graphdb
     class Transaction < ActiveNodeBase
 
       property :hex
-      property :txid, index: :exact, constraint: :unique
+      property :txid, index: :exact
       property :version, type: Integer
       property :lock_time
       property :block_hash
@@ -12,8 +12,8 @@ module Graphdb
       property :confirmations, type: Integer
 
       has_one :out, :block, type: :block
-      has_many :in, :inputs, origin: :transaction, model_class: TxIn, dependent: :destroy
-      has_many :in, :outputs, origin: :transaction, model_class: TxOut, dependent: :destroy
+      has_many :in, :inputs, origin: :transaction, model_class: 'Graphdb::Model::TxIn', dependent: :destroy
+      has_many :in, :outputs, origin: :transaction, model_class: 'Graphdb::Model::TxOut', dependent: :destroy
 
       validates :hex, :presence => true
       validates :txid, :presence => true

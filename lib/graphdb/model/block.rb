@@ -2,7 +2,7 @@ module Graphdb
   module Model
     class Block < ActiveNodeBase
 
-      property :block_hash, index: :exact, constraint: :unique
+      property :block_hash, index: :exact
       property :size, type: Integer
       property :height, type: Integer
       property :version
@@ -18,8 +18,8 @@ module Graphdb
       property :created_at
       property :updated_at
 
-      has_many :in, :transactions, origin: :block, model_class: Transaction, dependent: :destroy
-      has_one :out, :previous_block, type: :previous_block, model_class: Block
+      has_many :in, :transactions, origin: :block, model_class: 'Graphdb::Model::Transaction', dependent: :destroy
+      has_one :out, :previous_block, type: :previous_block, model_class: 'Graphdb::Model::Block'
 
       validates :block_hash, :presence => true
       validates :height, :presence => true

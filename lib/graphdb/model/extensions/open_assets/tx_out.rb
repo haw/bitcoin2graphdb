@@ -12,7 +12,7 @@ module Graphdb
             base.class_eval do
               property :asset_quantity, type: Integer
               property :oa_output_type
-              has_one :out, :asset_id, type: :asset_id, model_class: AssetId
+              has_one :out, :asset_id, type: :asset_id, model_class: 'Graphdb::Model::AssetId'
             end
           end
 
