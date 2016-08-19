@@ -2,7 +2,6 @@ module BitcoinMock
 
   def setup_mock
     provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new({:cache => ':memory:', :network => 'testnet'})
-
     testnet_mock = double('BitcoinCoreProviderTestnet Mock')
     load_block(testnet_mock)
     load_tx(testnet_mock)

@@ -42,6 +42,7 @@ bitcoin2graphdb:
       port: 'Bitcoin Core server port. ex, 8332'
       host: 'Bitcoin Core server host. ex, xxx.xxx.xxx.xxx'
     sleep_interval: 600
+    min_block_confirmation: 2
   neo4j:
     server: 'neo4j server url. ex, http://localhost:7474'
     basic_auth:

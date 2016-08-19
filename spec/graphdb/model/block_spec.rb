@@ -94,4 +94,25 @@ describe Graphdb::Model::Block do
       expect(Graphdb::Model::Address.count).to eq(3)
     end
   end
+
+  describe 'check min block confirmation' do
+    context 'min confirmation is 2' do
+      it do
+        expect(Graphdb::Model::Block.create_from_block_height(722039).height).to eq(722039)
+      end
+    end
+
+    context 'min confirmation is 5' do
+      before{
+        Bitcoin2Graphdb::Bitcoin.provider.api.config[:min_block_confirmation] = 5
+      }
+      it do
+        expect{Graphdb::Model::Block.create_from_block_height(722039)}.to raise_error(OpenAssets::Provider::ApiError)
+      end
+      after{
+        Bitcoin2Graphdb::Bitcoin.provider.api.config[:min_block_confirmation] = 2
+      }
+    end
+  end
+
 end

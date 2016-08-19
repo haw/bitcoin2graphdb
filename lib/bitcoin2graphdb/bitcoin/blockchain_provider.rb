@@ -7,6 +7,7 @@ module Bitcoin2Graphdb
       def open(config)
         self.provider = BlockchainProvider.new(config)
       end
+
     end
 
     class BlockchainProvider
@@ -19,7 +20,9 @@ module Bitcoin2Graphdb
       end
 
       def block(block_hash)
-        api.provider.getblock(block_hash)
+        b = api.provider.getblock(block_hash)
+        raise OpenAssets::Provider::ApiError.new('{"code"=>-8, "message"=>"Block height out of range"}') if b['confirmations'] < min_block_confirmation
+        b
       end
 
       def block_hash(block_height)
@@ -32,6 +35,11 @@ module Bitcoin2Graphdb
 
       def oa_outputs(txid)
         api.get_outputs_from_txid(txid, true)
+      end
+
+      private
+      def min_block_confirmation
+        api.config[:min_block_confirmation] ? api.config[:min_block_confirmation] : 2
       end
 
     end
