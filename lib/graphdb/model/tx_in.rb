@@ -9,8 +9,8 @@ module Graphdb
       property :coinbase
       property :sequence
 
-      has_one :out, :transaction, type: :transaction, model_class: Transaction
-      has_one :in, :out_point, origin: :out_point, model_class: Graphdb::Model::TxOut
+      has_one :out, :transaction, type: :transaction, model_class: 'Graphdb::Model::Transaction'
+      has_one :in, :out_point, origin: :out_point, model_class: 'Graphdb::Model::TxOut'
 
       validates :sequence, :presence => true
 

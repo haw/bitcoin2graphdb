@@ -4,7 +4,7 @@ module Graphdb
     class AssetId < ActiveNodeBase
       property :asset_id, index: :exact
 
-      has_many :in, :outputs, origin: :asset_id, model_class: TxOut
+      has_many :in, :outputs, origin: :asset_id, model_class: 'Graphdb::Model::TxOut'
 
       validates :asset_id, :presence => true
 

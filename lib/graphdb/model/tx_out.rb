@@ -9,9 +9,9 @@ module Graphdb
       property :output_type
       property :req_sigs, type: Integer
 
-      has_one :out, :transaction, type: :transaction, model_class: Transaction
-      has_many :out, :addresses, type: :address, model_class: Address
-      has_one :out, :out_point, type: :spent_input, model_class: TxIn
+      has_one :out, :transaction, type: :transaction, model_class: 'Graphdb::Model::Transaction'
+      has_many :out, :addresses, type: :address, model_class: 'Graphdb::Model::Address'
+      has_one :out, :out_point, type: :spent_input, model_class: 'Graphdb::Model::TxIn'
 
       validates :value, :presence => true
       validates :n, :presence => true

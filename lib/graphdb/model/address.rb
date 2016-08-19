@@ -3,7 +3,7 @@ module Graphdb
     class Address < ActiveNodeBase
       property :address, index: :exact
 
-      has_many :in, :outputs, origin: :addresses, model_class: TxOut
+      has_many :in, :outputs, origin: :addresses, model_class: 'Graphdb::Model::TxOut'
 
       validates :address, presence: true
 
