@@ -1,7 +1,7 @@
 module Graphdb
   module Model
     class Address < ActiveNodeBase
-      property :address, index: :exact, constraint: :unique
+      property :address, index: :exact
 
       has_many :in, :outputs, origin: :addresses, model_class: TxOut
 

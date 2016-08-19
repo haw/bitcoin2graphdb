@@ -2,7 +2,7 @@ module Graphdb
   module Model
     class Block < ActiveNodeBase
 
-      property :block_hash, index: :exact, constraint: :unique
+      property :block_hash, index: :exact
       property :size, type: Integer
       property :height, type: Integer
       property :version

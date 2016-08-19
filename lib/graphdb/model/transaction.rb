@@ -3,7 +3,7 @@ module Graphdb
     class Transaction < ActiveNodeBase
 
       property :hex
-      property :txid, index: :exact, constraint: :unique
+      property :txid, index: :exact
       property :version, type: Integer
       property :lock_time
       property :block_hash
