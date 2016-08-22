@@ -15,12 +15,7 @@ module Graphdb
 
             def create_from_txid(txid)
               tx = super(txid)
-              outputs = Bitcoin2Graphdb::Bitcoin.provider.oa_outputs(txid)
-              graph_outputs = tx.outputs.to_a
-              outputs.each{|o|
-                output = graph_outputs.find{|graph_out|graph_out.n == o['vout']}
-                output.apply_oa_attributes(o)
-              }
+              tx.apply_oa_outputs
               tx.save!
               tx
             end
@@ -33,6 +28,15 @@ module Graphdb
               return true unless o.asset_id.nil?
             end
             false
+          end
+
+          def apply_oa_outputs
+            oa_outputs = Bitcoin2Graphdb::Bitcoin.provider.oa_outputs(txid)
+            graph_outputs = outputs.to_a
+            oa_outputs.each{|o|
+              output = graph_outputs.find{|graph_out|graph_out.n == o['vout']}
+              output.apply_oa_attributes(o)
+            }
           end
 
         end
