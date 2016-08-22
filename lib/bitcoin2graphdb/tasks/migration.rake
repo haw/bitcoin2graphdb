@@ -40,6 +40,11 @@ namespace :b2g do
     end
   end
 
+  desc 'Search invalid oa tx.(invalid tx exist only openassets-ruby bug.)'
+  task :search_invalid_oa_tx, [:config_path] do |task, args|
+    get_migration(args.config_path).search_invalid_oa_tx
+  end
+
   private
   def get_migration(config_path)
     config = YAML.load(File.read(config_path)).deep_symbolize_keys[:bitcoin2graphdb]

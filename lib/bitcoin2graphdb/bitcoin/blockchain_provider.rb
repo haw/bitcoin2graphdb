@@ -33,8 +33,8 @@ module Bitcoin2Graphdb
         api.provider.getrawtransaction(txid, 1)
       end
 
-      def oa_outputs(txid)
-        api.get_outputs_from_txid(txid, true)
+      def oa_outputs(txid, cache = true)
+        api.get_outputs_from_txid(txid, cache)
       end
 
       private

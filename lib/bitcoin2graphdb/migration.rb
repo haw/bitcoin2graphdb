@@ -116,6 +116,14 @@ module Bitcoin2Graphdb
       end
     end
 
+    def search_invalid_oa_tx
+      puts "start get_invalid_oa_tx"
+      Graphdb::Model::AssetId.all.each{|asset_id|
+        asset_id.issuance_txs.each{|issuance_tx| asset_outputs(issuance_tx.txid)}
+      }
+      puts "get_invalid_oa_tx end."
+    end
+
     private
     def current_block_height
       return @block_height if @block_height
@@ -128,6 +136,17 @@ module Bitcoin2Graphdb
         config[:neo4j][:initialize]
       else
         {request: {timeout: 600, open_timeout: 2}}
+      end
+    end
+
+    def asset_outputs(txid)
+      tx = Graphdb::Model::Transaction.with_txid(txid).first
+      not_oa_tx = Bitcoin2Graphdb::Bitcoin.provider.oa_outputs(txid, false).find{|o|!o['asset_id'].nil?}.nil?
+      tx.outputs.each do |o|
+        unless o.asset_id.nil?
+          puts "This tx is not oa. txid = #{txid}" if not_oa_tx
+          asset_outputs(o.out_point.transaction.txid) unless o.out_point.nil?
+        end
       end
     end
 
