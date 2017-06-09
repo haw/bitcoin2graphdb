@@ -1,4 +1,4 @@
-# Bitcoin2Graphdb [![Build Status](https://travis-ci.org/haw-itn/bitcoin2graphdb.svg?branch=master)](https://travis-ci.org/haw-itn/bitcoin2graphdb) [![Gem Version](https://badge.fury.io/rb/bitcoin2graphdb.svg)](https://badge.fury.io/rb/bitcoin2graphdb) [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) 
+# Bitcoin2Graphdb [![Build Status](https://travis-ci.org/haw-itn/bitcoin2graphdb.svg?branch=master)](https://travis-ci.org/haw-itn/bitcoin2graphdb) [![Gem Version](https://badge.fury.io/rb/bitcoin2graphdb.svg)](https://badge.fury.io/rb/bitcoin2graphdb) [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 A tool for import Bitcoin blockchain data into neo4j database.
 
@@ -56,6 +56,11 @@ bitcoin2graphdb:
 
 ## Usage
 
+* Show usage
+```
+$ bitcoin2graphdb help
+```
+
 * Start bitcoin2graphdb daemon
 ```
 $ bitcoin2graphdb start -c <configuration file path>
@@ -63,7 +68,7 @@ $ bitcoin2graphdb start -c <configuration file path>
 
 * Stop bitcoin2graphdb daemon
 ```
-$ bitcoin2graphdb stop 
+$ bitcoin2graphdb stop
 ```
 
 ## Extensions
@@ -73,7 +78,7 @@ Bitcoin2Graphdb currently supports following extensions.
 |Extension Key Name|Description|
 |:-----------|:------------|
 |open_assets| Add Open Assets Protocol support. If this extension is enabled, the asset quantity and Graphdb::Model::AssetId association will be added to the Graphdb::Model::TxOut.|
-* Open Assets Protocol  
+* Open Assets Protocol
 
 To enable extension, add an extension key name to enable the Configuration file like following.
 
@@ -86,13 +91,13 @@ bitcoin2graphdb:
 
 # Testing
 
-When you run rspec, you need to run neo4j test server(http://localhost:7475) in advance.   
-Others are the same as normal rspec. 
+When you run rspec, you need to run neo4j test server(http://localhost:7475) in advance.
+Others are the same as normal rspec.
 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/haw-itn/bitcoin2graphdb. 
+Bug reports and pull requests are welcome on GitHub at https://github.com/haw-itn/bitcoin2graphdb.
 
 ## License
 
@@ -117,4 +122,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-

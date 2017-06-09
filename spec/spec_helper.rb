@@ -10,13 +10,34 @@ RSpec.configure do |config|
   include BitcoinMock
 
   config.before(:each) do |example|
-    DatabaseCleaner.start
-    setup_mock
-    Graphdb.configuration.unload_extensions
+    unless example.metadata[:cli]
+      DatabaseCleaner.start
+      setup_mock
+      Graphdb.configuration.unload_extensions
+    end
   end
 
   config.after(:each) do |example|
-    DatabaseCleaner.clean
+    if example.metadata[:cli]
+      Dir.glob(["*.pid", "*.log"]).each do |f|
+        File.delete f
+      end
+    else
+      DatabaseCleaner.clean
+    end
+  end
+
+  # for thor command.
+  def capture(stream)
+    begin
+      stream = stream.to_s
+      eval "$#{stream} = StringIO.new"
+      yield
+      result = eval("$#{stream}").string
+    ensure
+      eval("$#{stream} = #{stream.upcase}")
+    end
+    result
   end
 
 end
