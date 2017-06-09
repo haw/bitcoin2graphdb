@@ -27,8 +27,8 @@ module Bitcoin2Graphdb
   class CLI < Thor
     class_option :pid, aliases: '-p', default: Dir.pwd + '/bitcoin2graphdb.pid', banner: '<pid file path>'
     class_option :log, aliases: '-l', default: Dir.pwd + '/bitcoin2graphdb.log', banner: '<log file path>'
-    class_option :conf, aliases: '-c' , required: true, banner: '<configuration file path>'
 
+    option :conf, aliases: '-c' , required: true, banner: '<configuration file path>'
     desc "start", "start bitcoin2graphdb daemon process"
     def start(name="Ruby")
       conf = if File.exists?(options[:conf])
