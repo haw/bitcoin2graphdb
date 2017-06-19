@@ -30,7 +30,7 @@ module Bitcoin2Graphdb
 
     option :conf, aliases: '-c' , required: true, banner: '<configuration file path>'
     desc "start", "start bitcoin2graphdb daemon process"
-    def start(name="Ruby")
+    def start()
       conf = if File.exists?(options[:conf])
                YAML.load( File.read(options[:conf]) ).deep_symbolize_keys
              else
@@ -56,6 +56,36 @@ module Bitcoin2Graphdb
           pid_file: File.expand_path(options[:pid]),
           sync_log: true,
           singleton: true}, ['stop'])
+    end
+
+    desc "status", "show bitcoin2graphdb daemon status"
+    def status
+      Bitcoin2Graphdb::Bitcoin2GraphdbDaemon.spawn!(
+        {
+          working_dir: Dir.pwd,
+          log_file: File.expand_path(options[:log]),
+          pid_file: File.expand_path(options[:pid]),
+          sync_log: true,
+          singleton: true}, ['status'])
+    end
+
+    option :conf, aliases: '-c' , required: true, banner: '<configuration file path>'
+    desc "restart", "restart bitcoin2graphdb daemon process"
+    def restart()
+      conf = if File.exists?(options[:conf])
+               YAML.load( File.read(options[:conf]) ).deep_symbolize_keys
+             else
+               raise ArgumentError.new(
+                       "configuration file[#{options[:conf]}] not specified or does not exist.")
+             end
+
+      Bitcoin2Graphdb::Bitcoin2GraphdbDaemon.spawn!(
+        {
+          working_dir: Dir.pwd,
+          log_file: File.expand_path(options[:log]),
+          pid_file: File.expand_path(options[:pid]),
+          sync_log: true,
+          singleton: true}, ['restart', conf])
     end
   end
 end

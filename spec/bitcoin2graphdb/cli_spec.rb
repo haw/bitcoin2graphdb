@@ -45,4 +45,20 @@ describe Bitcoin2Graphdb::CLI do
     end
   end
 
+  describe "#status", cli: true do
+    it "-c is not required." do
+      args = ["status", "-c", "spec/fixtures/default-config.yml"]
+      content = capture(:stderr) { Bitcoin2Graphdb::CLI.start(args) }
+      expect(content).to match(/Usage: "\w+ status"/m)
+    end
+  end
+
+  describe "#restart", cli: true do
+    it "use -c option, restart bitcoin2graphdb deaemon" do
+      args = ["restart", "-c", "spec/fixtures/default-config.yml"]
+      content = capture(:stdout) { Bitcoin2Graphdb::CLI.start(args) }
+      expect(content).to match(/PID file not found. Is the daemon started?/m)
+    end
+  end
+
 end

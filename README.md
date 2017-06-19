@@ -71,6 +71,16 @@ $ bitcoin2graphdb start -c <configuration file path>
 $ bitcoin2graphdb stop
 ```
 
+* Show bitcoin2graphdb Status
+```
+$ bitcoin2graphdb status
+```
+
+* Restart bitcoin2graphdb daemon
+```
+$ bitcoin2graphdb restart -c <configuration file path>
+```
+
 ## Extensions
 
 Bitcoin2Graphdb currently supports following extensions.
