@@ -14,12 +14,12 @@ describe Bitcoin2Graphdb::CLI do
       args = ["start", "-c", "spec/fixtures/default-config.yml"]
       args << "-p"
       args << "foo.pid"
-      expect { capture(:stdout) { Bitcoin2Graphdb::CLI.start(args) };sleep 1 }
+      expect { capture(:stdout) { Bitcoin2Graphdb::CLI.start(args) };sleep 3 }
         .to change {File.exist?("./foo.pid") }.from(false).to(true)
       args = ["start", "-c", "spec/fixtures/default-config.yml"]
       args << "--pid"
       args << "bar.pid"
-      expect { capture(:stdout) { Bitcoin2Graphdb::CLI.start(args) };sleep 1 }
+      expect { capture(:stdout) { Bitcoin2Graphdb::CLI.start(args) };sleep 3 }
         .to change {File.exist?("./bar.pid") }.from(false).to(true)
     end
 
@@ -27,12 +27,12 @@ describe Bitcoin2Graphdb::CLI do
       args = ["start", "-c", "spec/fixtures/default-config.yml"]
       args << "-l"
       args << "foo.log"
-      expect { capture(:stdout) { Bitcoin2Graphdb::CLI.start(args) };sleep 1 }
+      expect { capture(:stdout) { Bitcoin2Graphdb::CLI.start(args) };sleep 3 }
         .to change {File.exist?("./foo.log") }.from(false).to(true)
 
       args = ["start", "-c", "spec/fixtures/default-config.yml"]
       args << "--log=bar.log"
-      expect { capture(:stdout) { Bitcoin2Graphdb::CLI.start(args) };sleep 1 }
+      expect { capture(:stdout) { Bitcoin2Graphdb::CLI.start(args) };sleep 3 }
         .to change {File.exist?("./bar.log") }.from(false).to(true)
     end
   end
