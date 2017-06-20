@@ -26,12 +26,7 @@ module Bitcoin2Graphdb
     option :conf, aliases: '-c' , required: true, banner: '<configuration file path>'
     desc "start", "start bitcoin2graphdb daemon process"
     def start()
-      conf = if File.exists?(options[:conf])
-               YAML.load( File.read(options[:conf]) ).deep_symbolize_keys
-             else
-               raise ArgumentError.new(
-                       "configuration file[#{options[:conf]}] not specified or does not exist.")
-             end
+      conf = read_conf options[:conf]
 
       Bitcoin2Graphdb::Bitcoin2GraphdbDaemon.spawn!(
         {
@@ -67,12 +62,7 @@ module Bitcoin2Graphdb
     option :conf, aliases: '-c' , required: true, banner: '<configuration file path>'
     desc "restart", "restart bitcoin2graphdb daemon process"
     def restart()
-      conf = if File.exists?(options[:conf])
-               YAML.load( File.read(options[:conf]) ).deep_symbolize_keys
-             else
-               raise ArgumentError.new(
-                       "configuration file[#{options[:conf]}] not specified or does not exist.")
-             end
+      conf = read_conf options[:conf]
 
       Bitcoin2Graphdb::Bitcoin2GraphdbDaemon.spawn!(
         {
@@ -82,5 +72,15 @@ module Bitcoin2Graphdb
           sync_log: true,
           singleton: true}, ['restart', conf])
     end
+
+    private
+    def read_conf(conf_path)
+      unless File.exists?(conf_path)
+        raise ArgumentError.new(
+                "configuration file[#{options[:conf]}] not specified or does not exist.")
+      end
+      YAML.load( File.read(options[:conf]) ).deep_symbolize_keys
+    end
+
   end
 end
