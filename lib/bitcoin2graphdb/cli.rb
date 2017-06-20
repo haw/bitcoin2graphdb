@@ -16,11 +16,6 @@ module Bitcoin2Graphdb
     def stop
       puts "Bitcoin2GraphdbDaemon stop : #{Time.now}"
     end
-
-    private
-    def config(args)
-      config_index = args.index("-c")
-    end
   end
 
 
