@@ -9,3 +9,6 @@ before_script:
   - bundle exec rake neo4j:install[community-2.3.3,test]
   - bundle exec rake neo4j:config[test,7475]
   - bundle exec rake neo4j:start[test]
+
+script:
+  - bundle exec rake spec
