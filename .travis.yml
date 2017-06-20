@@ -1,11 +1,11 @@
 language: ruby
 rvm:
   - 2.2.2
+  - 2.3.0
 
 bundler_args: --jobs=2
 
-script:
+before_script:
   - bundle exec rake neo4j:install[community-2.3.3,test]
   - bundle exec rake neo4j:config[test,7475]
   - bundle exec rake neo4j:start[test]
-  - bundle exec rake spec
