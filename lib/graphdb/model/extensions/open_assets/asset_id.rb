@@ -22,7 +22,8 @@ module Graphdb
 
       # Get issuance transactions
       def issuance_txs
-        outputs.select{|o|o.oa_output_type == 'issuance'}.map{|o|o.transaction}.sort{|a,b| b.block_time <=> a.block_time}
+        outputs.select{|o|o.oa_output_type == 'issuance'}.
+            map(&:transaction).uniq{|tx| tx.txid}.sort{|a,b| b.block_time <=> a.block_time}
       end
 
     end
