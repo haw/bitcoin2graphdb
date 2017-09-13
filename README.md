@@ -104,6 +104,25 @@ bitcoin2graphdb:
 When you run rspec, you need to run neo4j test server(http://localhost:7475) in advance.
 Others are the same as normal rspec.
 
+## setup test database
+
+### install test database
+
+```
+$ rake neo4j:install'[community-2.3.3,test]'
+```
+
+### change port
+
+```
+$ rake neo4j:config'[test,7475]'
+```
+
+### start test database
+
+```
+$ rake neo4j:start'[test]'
+```
 
 ## Contributing
 
