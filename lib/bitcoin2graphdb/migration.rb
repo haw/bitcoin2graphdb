@@ -29,7 +29,7 @@ module Bitcoin2Graphdb
         begin
           Graphdb::Model::Block.create_from_block_height(block_height)
           @block_height = block_height
-        rescue OpenAssets::Provider::ApiError => e
+        rescue OpenAssets::Provider::ApiError, Bitcoin2Graphdb::Error => e
           if e.message == '{"code"=>-8, "message"=>"Block height out of range"}'
             puts "Block height out of range. sleep #{@sleep_interval} seconds."
             sleep @sleep_interval

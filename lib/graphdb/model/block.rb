@@ -49,6 +49,12 @@ module Graphdb
         block.difficulty = hash['difficulty']
         block.chain_work = hash['chainwork']
         block.previous_block_hash = hash['previousblockhash']
+        # check previous block exist?
+        begin
+          Bitcoin2Graphdb::Bitcoin.provider.block(block.previous_block_hash) if block.previous_block_hash # except genesis block
+        rescue OpenAssets::Provider::ApiError
+          raise Bitcoin2Graphdb::Error, 'previous block not found. maybe re-org occured.'
+        end
         block.next_block_hash = hash['nextblockhash']
         block.confirmations = hash['confirmations']
         block.save!
@@ -66,6 +72,7 @@ module Graphdb
       end
 
       private
+
       def chain_previous_block
         unless self.previous_block_hash.nil?
           self.previous_block = Block.with_block_hash(self.previous_block_hash).first

@@ -1,0 +1,23 @@
+// dummy block which reference ohphan block.
+{
+  "hash": "00000000003842768384a65400b73e9d8a61e7708bc009f31942983d3ffb878e",
+  "confirmations": 441885,
+  "strippedsize": 212,
+  "size": 212,
+  "weight": 848,
+  "height": 766558,
+  "version": 536870913,
+  "versionHex": "20000001",
+  "merkleroot": "fed5310354ec672c1e45c19182b1b8ca48a9ad0a6831e2b1df3c1384c7bbba2b",
+  "tx": [
+    "fed5310354ec672c1e45c19182b1b8ca48a9ad0a6831e2b1df3c1384c7bbba2b"
+  ],
+  "time": 1460778703,
+  "mediantime": 1460778696,
+  "nonce": 3487171490,
+  "bits": "1c72a74b",
+  "difficulty": 2.232780684304926,
+  "chainwork": "00000000000000000000000000000000000000000000000966094fb2449b56b9",
+  "previousblockhash": "000000000034b01da6f7b67fa0e511ed437fd2b436af02dd9dfae5ffac306e9e",
+  "nextblockhash": "000000000027f69b43a162323bbe259ae5bb050c44b97d19ccf997bb46f46cdf"
+}

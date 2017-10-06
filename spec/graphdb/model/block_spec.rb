@@ -115,4 +115,18 @@ describe Graphdb::Model::Block do
     end
   end
 
+  describe 'detect reorg' do
+    context 'previous block exists' do
+      it 'should be create a block' do
+        expect{Graphdb::Model::Block.create_from_block_height(722039)}.to_not raise_error(Bitcoin2Graphdb::Error)
+      end
+    end
+
+    context 'previous block does not exist' do
+      it 'should be raise error' do
+        expect{Graphdb::Model::Block.create_from_block_height(766558)}.to raise_error(Bitcoin2Graphdb::Error)
+      end
+    end
+  end
+
 end
