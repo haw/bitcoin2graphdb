@@ -2,7 +2,7 @@ require 'rubygems'
 require 'base'
 require 'database_cleaner'
 require 'bitcoin_mock'
-require 'neo4j'
+require 'neo4j/core/cypher_session/adaptors/http'
 
 RSpec.configure do |config|
 
@@ -10,6 +10,7 @@ RSpec.configure do |config|
   include BitcoinMock
 
   config.before(:each) do |example|
+    neo4j_session
     unless example.metadata[:cli]
       DatabaseCleaner.start
       setup_mock
@@ -45,4 +46,9 @@ end
 def fixture_file(relative_path)
   file = File.read(File.join(File.dirname(__FILE__), 'fixtures', relative_path))
   JSON.parse(file)
+end
+
+def neo4j_session
+  neo4j_adaptor = Neo4j::Core::CypherSession::Adaptors::HTTP.new('http://localhost:7475', { :basic_auth => { username: 'neo4j', password: 'neo4j' }, :initialize => { :request => {:timeout => 600, :open_timeout => 2}}})
+  Neo4j::ActiveBase.on_establish_session { Neo4j::Core::CypherSession.new(neo4j_adaptor) }
 end
