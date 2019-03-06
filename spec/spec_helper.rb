@@ -1,18 +1,15 @@
 require 'rubygems'
 require 'base'
-require 'database_cleaner'
 require 'bitcoin_mock'
 require 'neo4j/core/cypher_session/adaptors/http'
 
 RSpec.configure do |config|
 
-  DatabaseCleaner[:neo4j, connection: {type: :server_db, path: 'http://localhost:7475'}].strategy = :transaction
   include BitcoinMock
 
   config.before(:each) do |example|
     neo4j_session
     unless example.metadata[:cli]
-      DatabaseCleaner.start
       setup_mock
       Graphdb.configuration.unload_extensions
     end
@@ -24,7 +21,7 @@ RSpec.configure do |config|
         File.delete f
       end
     else
-      DatabaseCleaner.clean
+      Neo4j::ActiveBase.current_session.query('MATCH(n) DETACH DELETE n')
     end
   end
 
