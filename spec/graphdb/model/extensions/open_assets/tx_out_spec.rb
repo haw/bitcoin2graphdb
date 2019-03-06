@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe 'Graphdb::Model::Extensions::OpenAssets::TxOut' do
 
-  before{
-    Graphdb::Model::Transaction.prepend(Graphdb::Model::Extensions::OpenAssets::Transaction)
-    Graphdb::Model::TxOut.prepend(Graphdb::Model::Extensions::OpenAssets::TxOut)
-  }
-
   describe 'output coloring' do
     before{
       Graphdb::Model::Transaction.create_from_txid('525f7baa656d04016fad0094187cc969b526ca1261312ddf09a648d822ee6cdd')

@@ -11,7 +11,12 @@ RSpec.configure do |config|
     neo4j_session
     unless example.metadata[:cli]
       setup_mock
-      Graphdb.configuration.unload_extensions
+      unless example.metadata[:migration]
+        Graphdb.configure do |config|
+          config.neo4j_server = 'http://localhost:7475'
+          config.extensions = ['open_assets']
+        end
+      end
     end
   end
 
