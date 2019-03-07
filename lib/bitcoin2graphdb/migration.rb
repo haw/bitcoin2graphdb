@@ -26,7 +26,7 @@ module Bitcoin2Graphdb
 
     def run_with_height(block_height)
       puts "start migration for block height = #{block_height}. #{Time.now}"
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           Graphdb::Model::Block.create_from_block_height(block_height)
           @block_height = block_height
@@ -44,7 +44,7 @@ module Bitcoin2Graphdb
     end
 
     def repair_assign_txs(block_height)
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           block = Graphdb::Model::Block.with_height(block_height).first
           if block
@@ -67,7 +67,7 @@ module Bitcoin2Graphdb
     end
 
     def remove_block(block_height)
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           block = Graphdb::Model::Block.with_height(block_height).first
           if block.nil?
@@ -84,7 +84,7 @@ module Bitcoin2Graphdb
     end
 
     def import_tx(txid)
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           tx = Graphdb::Model::Transaction.with_txid(txid).first
           if tx.nil?
@@ -101,7 +101,7 @@ module Bitcoin2Graphdb
     end
 
     def remove_tx(txid)
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           tx = Graphdb::Model::Transaction.with_txid(txid).first
           if tx.nil?
