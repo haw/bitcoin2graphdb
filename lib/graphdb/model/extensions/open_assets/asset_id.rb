@@ -2,7 +2,7 @@ module Graphdb
   module Model
 
     class AssetId < ActiveNodeBase
-      property :asset_id, index: :exact
+      property :asset_id
 
       has_many :in, :outputs, origin: :asset_id, model_class: 'Graphdb::Model::TxOut'
 
