@@ -4,6 +4,8 @@ require 'database_cleaner'
 require 'bitcoin_mock'
 require 'neo4j'
 
+Dir[File.join(File.dirname(__FILE__ ), 'mocks', '**', '*.rb')].each { |f| require f }
+
 RSpec.configure do |config|
 
   DatabaseCleaner[:neo4j, connection: {type: :server_db, path: 'http://localhost:7475'}].strategy = :transaction
