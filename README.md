@@ -109,7 +109,7 @@ Others are the same as normal rspec.
 ### install test database
 
 ```
-$ rake neo4j:install'[community-2.3.3,test]'
+$ rake neo4j:install'[community-3.4.1,test]'
 ```
 
 ### change port
@@ -122,6 +122,16 @@ $ rake neo4j:config'[test,7475]'
 
 ```
 $ rake neo4j:start'[test]'
+```
+
+### migration
+```
+$ rake neo4j:migrate
+```
+
+#### specify neo4j url (optional)
+```
+$ rake neo4j:migrate NEO4J_URL=http://localhost:7475
 ```
 
 ## Contributing
