@@ -1,6 +1,7 @@
 module BitcoinMock
 
   def setup_mock
+    load_help
     provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new({:cache => ':memory:', :network => 'testnet'})
     testnet_mock = double('BitcoinCoreProviderTestnet Mock')
     load_block(testnet_mock)
@@ -10,6 +11,11 @@ module BitcoinMock
   end
 
   private
+
+  def load_help
+    json = File.read(File.join(File.dirname(__FILE__), 'fixtures', 'provider', 'help.json'))
+    allow_any_instance_of(OpenAssets::Provider::BitcoinCoreProvider).to receive(:request).with(:help).and_return(json['result'])
+  end
 
   def load_tx(provider_mock)
     Dir::entries(__dir__ + "/fixtures/tx").each do |file_name|
