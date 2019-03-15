@@ -1,7 +1,7 @@
 module Graphdb
   module Model
     class Address < ActiveNodeBase
-      property :address, index: :exact
+      property :address
 
       has_many :in, :outputs, origin: :addresses, model_class: 'Graphdb::Model::TxOut'
 

@@ -1,11 +1,6 @@
 require 'spec_helper'
-require 'graphdb/model/extensions/open_assets/asset_id'
-describe Graphdb::Model::AssetId do
 
-  before{
-    Graphdb::Model::Transaction.prepend(Graphdb::Model::Extensions::OpenAssets::Transaction)
-    Graphdb::Model::TxOut.prepend(Graphdb::Model::Extensions::OpenAssets::TxOut)
-  }
+describe 'Graphdb::Model::AssetId' do
 
   describe 'with asset_id scope' do
     before {

@@ -11,6 +11,8 @@
 .idea
 config.yml
 cache.db
-db/neo4j
+db/neo4j/*
+!db/neo4j/migrate
+!db/neo4j/schema.yml
 bitcoin2graphdb.log
 bitcoin2graphdb.pid

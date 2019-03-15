@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Bitcoin2Graphdb::Migration do
+describe Bitcoin2Graphdb::Migration, migration: true do
 
   describe 'load configuration' do
     context 'default configuration' do

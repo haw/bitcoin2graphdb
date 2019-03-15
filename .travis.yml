@@ -7,9 +7,15 @@ rvm:
 bundler_args: --jobs=2
 
 before_script:
-  - bundle exec rake neo4j:install[community-2.3.3,test]
+  - bundle exec rake neo4j:install[community-3.4.1,test]
   - bundle exec rake neo4j:config[test,7475]
   - bundle exec rake neo4j:start[test]
+  - sleep 20
+  - bundle exec rake neo4j:migrate
+
+env:
+  global:
+    - NEO4J_URL="http://localhost:7475"
 
 script:
   - bundle exec rake spec

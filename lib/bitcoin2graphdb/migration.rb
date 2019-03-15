@@ -11,7 +11,8 @@ module Bitcoin2Graphdb
       end
       neo4j_config = {basic_auth: config[:neo4j][:basic_auth], initialize: neo4j_timeout_ops(config)}
       Bitcoin2Graphdb::Bitcoin.provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new(config[:bitcoin])
-      Neo4j::Session.open(:server_db, config[:neo4j][:server], neo4j_config)
+      neo4j_adaptor = Neo4j::Core::CypherSession::Adaptors::HTTP.new(config[:neo4j][:server], neo4j_config)
+      Neo4j::ActiveBase.on_establish_session { Neo4j::Core::CypherSession.new(neo4j_adaptor) }
       @sleep_interval = config[:bitcoin][:sleep_interval].nil? ? 600 : config[:bitcoin][:sleep_interval].to_i
 
       Graphdb::Model.constants.each {|const_name| Graphdb::Model.const_get(const_name)}
@@ -25,7 +26,7 @@ module Bitcoin2Graphdb
 
     def run_with_height(block_height)
       puts "start migration for block height = #{block_height}. #{Time.now}"
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           Graphdb::Model::Block.create_from_block_height(block_height)
           @block_height = block_height
@@ -43,7 +44,7 @@ module Bitcoin2Graphdb
     end
 
     def repair_assign_txs(block_height)
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           block = Graphdb::Model::Block.with_height(block_height).first
           if block
@@ -66,7 +67,7 @@ module Bitcoin2Graphdb
     end
 
     def remove_block(block_height)
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           block = Graphdb::Model::Block.with_height(block_height).first
           if block.nil?
@@ -83,7 +84,7 @@ module Bitcoin2Graphdb
     end
 
     def import_tx(txid)
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           tx = Graphdb::Model::Transaction.with_txid(txid).first
           if tx.nil?
@@ -100,7 +101,7 @@ module Bitcoin2Graphdb
     end
 
     def remove_tx(txid)
-      Neo4j::Transaction.run do |tx|
+      Neo4j::ActiveBase.run_transaction do |tx|
         begin
           tx = Graphdb::Model::Transaction.with_txid(txid).first
           if tx.nil?

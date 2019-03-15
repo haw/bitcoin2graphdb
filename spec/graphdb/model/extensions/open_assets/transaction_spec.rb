@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe 'Graphdb::Model::Extensions::OpenAssets::Transaction' do
 
-  before{
-    Graphdb::Model::Transaction.prepend(Graphdb::Model::Extensions::OpenAssets::Transaction)
-    Graphdb::Model::TxOut.prepend(Graphdb::Model::Extensions::OpenAssets::TxOut)
-  }
-
   describe 'create oa transaction' do
     context 'not oa transaction' do
       subject{
