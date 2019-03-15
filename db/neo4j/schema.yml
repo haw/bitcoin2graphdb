@@ -1,0 +1,29 @@
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of ActiveNode to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.yml definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using neo4j:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
+
+---
+:constraints:
+- CONSTRAINT ON ( `graphdb::model::activenodebase`:`Graphdb::Model::ActiveNodeBase`
+  ) ASSERT `graphdb::model::activenodebase`.uuid IS UNIQUE
+- CONSTRAINT ON ( `neo4j::migrations::schemamigration`:`Neo4j::Migrations::SchemaMigration`
+  ) ASSERT `neo4j::migrations::schemamigration`.migration_id IS UNIQUE
+:indexes:
+- INDEX ON :Graphdb::Model::Address(address)
+- INDEX ON :Graphdb::Model::AssetId(asset_id)
+- INDEX ON :Graphdb::Model::Block(block_hash)
+- INDEX ON :Graphdb::Model::Transaction(txid)
+:versions:
+- '20190306081251'
+- '20190306081322'
+- '20190306081338'
+- '20190306081351'
+- '20190306081404'
