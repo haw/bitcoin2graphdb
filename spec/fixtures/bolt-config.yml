@@ -1,0 +1,18 @@
+bitcoin2graphdb:
+  bitcoin:
+    network: 'testnet'
+    rpc:
+      user: 'user'
+      password: 'password'
+      schema: 'http'
+      port: '18332'
+      host: 'localhost'
+  neo4j:
+    server: 'bolt://localhost:7473'
+    options:
+      read_timeout: -1
+      write_timeout: -1
+      connect_timeout: 10
+      ssl: false
+  extensions:
+    - 'open_assets'
