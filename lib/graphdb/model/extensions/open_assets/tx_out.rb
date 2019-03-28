@@ -10,8 +10,8 @@ module Graphdb
 
             end
             base.class_eval do
-              property :asset_quantity, type: Integer
-              property :oa_output_type
+              property :asset_quantity, type: Integer, default: 0
+              property :oa_output_type, default: 'uncolored'
               has_one :out, :asset_id, type: :asset_id, model_class: 'Graphdb::Model::AssetId'
             end
           end

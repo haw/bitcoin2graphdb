@@ -32,10 +32,12 @@ module Graphdb
 
           def apply_oa_outputs
             oa_outputs = Bitcoin2Graphdb::Bitcoin.provider.oa_outputs(txid)
-            oa_outputs.each{|o|
-              output = outputs.find_by(n: o['vout'])
-              output.apply_oa_attributes(o)
-            }
+            if oa_outputs.any?{ |tx_out| tx_out['output_type'] == 'marker' }
+              oa_outputs.each{|o|
+                output = outputs.find_by(n: o['vout'])
+                output.apply_oa_attributes(o)
+              }
+            end
           end
 
         end
