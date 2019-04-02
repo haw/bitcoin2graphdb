@@ -52,7 +52,7 @@ def fixture_file(relative_path)
 end
 
 def neo4j_session
-  neo4j_adaptor = Neo4j::Core::CypherSession::Adaptors::HTTP.new('http://localhost:7475', { :basic_auth => { username: 'neo4j', password: 'neo4j' }, :initialize => { :request => {:timeout => 600, :open_timeout => 2}}})
+  neo4j_adaptor = Neo4j::Core::CypherSession::Adaptors::Bolt.new('bolt://localhost:7473', { ssl: false })
   Neo4j::ActiveBase.on_establish_session { Neo4j::Core::CypherSession.new(neo4j_adaptor) }
 end
 
@@ -75,7 +75,7 @@ def change_neo4j_adaptor(config = nil)
     end
     graphdb_configure(config)
   else
-    neo4j_adaptor = Neo4j::Core::CypherSession::Adaptors::HTTP.new('http://localhost:7475', { :basic_auth => { username: 'neo4j', password: 'neo4j' }, :initialize => { :request => {:timeout => 600, :open_timeout => 2}}})
+    neo4j_adaptor = Neo4j::Core::CypherSession::Adaptors::Bolt.new('bolt://localhost:7473', { ssl: false })
   end
   Neo4j::ActiveBase.current_adaptor = neo4j_adaptor
 end
