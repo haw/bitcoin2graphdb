@@ -9,9 +9,8 @@ module Bitcoin2Graphdb
         c.neo4j_server = config[:neo4j][:server]
         c.extensions = config[:extensions] unless config[:extensions].nil?
       end
-      neo4j_config = {basic_auth: config[:neo4j][:basic_auth], initialize: neo4j_timeout_ops(config)}
       Bitcoin2Graphdb::Bitcoin.provider = Bitcoin2Graphdb::Bitcoin::BlockchainProvider.new(config[:bitcoin])
-      neo4j_adaptor = Neo4j::Core::CypherSession::Adaptors::HTTP.new(config[:neo4j][:server], neo4j_config)
+      neo4j_adaptor = create_neo4j_adaptor(config)
       Neo4j::ActiveBase.on_establish_session { Neo4j::Core::CypherSession.new(neo4j_adaptor) }
       @sleep_interval = config[:bitcoin][:sleep_interval].nil? ? 600 : config[:bitcoin][:sleep_interval].to_i
 
@@ -137,6 +136,33 @@ module Bitcoin2Graphdb
         config[:neo4j][:initialize]
       else
         {request: {timeout: 600, open_timeout: 2}}
+      end
+    end
+
+    def create_neo4j_adaptor(config)
+      uri = URI(config[:neo4j][:server])
+      case uri.scheme
+      when 'http'
+        faraday_configurator = proc do |faraday|
+          require 'typhoeus'
+          require 'typhoeus/adapters/faraday'
+          faraday.adapter :typhoeus
+          faraday.options.merge!(neo4j_timeout_ops(config)[:request])
+        end
+        neo4j_config = {basic_auth: config[:neo4j][:basic_auth], faraday_configurator: faraday_configurator}
+        Neo4j::Core::CypherSession::Adaptors::HTTP.new(config[:neo4j][:server], neo4j_config)
+      when 'bolt'
+        Neo4j::Core::CypherSession::Adaptors::Bolt.new(config[:neo4j][:server], neo4j_bolt_options(config))
+      else
+        fail ArgumentError, "Invalid URL: #{uri.inspect}"
+      end
+    end
+
+    def neo4j_bolt_options(config)
+      if config[:neo4j][:options]
+        config[:neo4j][:options]
+      else
+        { ssl: false }
       end
     end
 
