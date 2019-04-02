@@ -54,6 +54,29 @@ bitcoin2graphdb:
         open_timeout: 2
 ```
 
+You can use bolt protocol if you want more performance.
+
+```yaml
+bitcoin2graphdb:
+  bitcoin:
+    network: 'mainnet or testnet or regtest'
+    rpc:
+      user: 'Bitcoin Core rpc user.'
+      password: 'Bitcoin Core rpc password.'
+      schema: 'Bitcoin Core server schema. ex, http'
+      port: 'Bitcoin Core server port. ex, 8332'
+      host: 'Bitcoin Core server host. ex, xxx.xxx.xxx.xxx'
+    sleep_interval: 600
+    min_block_confirmation: 2
+  neo4j:
+    server: 'neo4j server url. ex, bolt://localhost:7472 or bolt://user:password@localhost:7472'
+    options:
+      read_timeout: -1 # No timeout. It is blocking mode. Non blocking mode have a problem. 
+      write_timeout: -1 # No timeout. It is blocking mode. Non blocking mode have a problem.
+      connect_timeout: 10
+      ssl: false # It is not support SSL yet.
+```
+
 ## Usage
 
 * Show usage
