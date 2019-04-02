@@ -25,7 +25,8 @@ Or install it yourself as:
 This tool requires the following software.
 
 * Bitcoin Core
-* Neo4j
+* Neo4j (>= 3.0)
+  * gem neo4j-core `>= 9.0.0`
 
 ## Configuration
 
