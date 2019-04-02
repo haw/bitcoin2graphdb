@@ -41,9 +41,7 @@ module Graphdb
       def self.find_by_outpoint(txid, n)
         tx = Graphdb::Model::Transaction.with_txid(txid).first
         if tx
-          tx.outputs.each{|o|
-            return o if o.n == n
-          }
+          tx.outputs.find_by(n: n)
         end
       end
 
